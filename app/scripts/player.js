@@ -79,25 +79,21 @@ define(['controls','platform'], function(controls,Platform) {
 
   Player.prototype.collision = function(objects){
     for (var i = 0; i < objects.length; i++) {
+      //checka hvaða object þetta er.
       if(objects[i] instanceof Platform){
-        //
+        //checka hvort playerinn sé að falla niður
         if(this.vel.y>=0){
-          console.log(this.vel.y);
-          //console.log("objects[i].pos.y:"+objects[i].pos.y+" = this.pos.y:"+this.pos.y);
-          //if(5>=objects[i].pos.y+this.pos.y){
-          //console.log("sumy:"+(objects[i].pos.y+this.pos.y));
-          //}
+          //checkar 15pixla bil hvort að playerinn sé að fara lenda á platform eða sé búinn að fara í gegn (-5)
           if(10>=objects[i].pos.y+this.pos.y &&objects[i].pos.y+this.pos.y>-5){
-            //console.log("objects[i].pos.x:"+objects[i].pos.x+" = this.pos.x:"+this.pos.x);
+            //checkar x hnit hvort playerinn sé að hitta á platformið á x ás, bæti við 40pixlum báðum meginn því characterinn er miklu stærri en hnitið.
             if(this.pos.x+40 >= objects[i].pos.x && this.pos.x-40 <= objects[i].pos.x+objects[i].width){
-              this.vel.y = 0;
-              this.pos.y = -objects[i].pos.y;
-              if(this.jumping == true)
+              this.vel.y = 0;//set velocity í 0 til að stoppa.
+              this.pos.y = -objects[i].pos.y; //set pos.y þar sem platforminn er (notaði margin á platforms til að hann væri ofaná.)
+              if(this.jumping == true)//hopp animations eins og áður.
               {
                 this.jumping = false;
                 this.el.blanka.toggleClass('blankaJump');
               }
-              console.log("lol");
             }
           }
         }
