@@ -31,6 +31,7 @@ define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
     this.lastFrame = now;
 
     this.player.onFrame(delta);
+    this.player.collision(this.objects); //collision detection.
     this.updateView();
     // Request next frame.
     requestAnimFrame(this.onFrame);
@@ -40,10 +41,15 @@ define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
     //this.viewEl.css('transform', 'translate3d(0px,'+this.i+'px,0)');
     //this.i++;
     var diff = this.viewPortY + this.player.pos.y;
-    if(diff < -100){
+    //if(diff < -100){
       this.viewEl.css('transform', 'translate3d(0px,'+(-diff)+'px,0)');
       this.viewportY = this.viewPortY+(-diff);
-    }
+    //}
+    //else if(this.player.pos.y == 0){
+      //this.viewEl.css('transform', 'translate3d(0px,0px,0)');
+      //this.viewportY = 0;
+    //}
+
     
   }
 
@@ -67,8 +73,56 @@ define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
   * Creating objects
   */
   this.addPlatform(new Platform({
+    x: 400,
+    y: 150},
+    150,
+    10
+  ));
+  this.addPlatform(new Platform({
+    x: 50,
+    y: 50},
+    150,
+    10
+  ));
+  this.addPlatform(new Platform({
     x: 150,
     y: 300},
+    150,
+    10
+  ));
+  this.addPlatform(new Platform({
+    x: 50,
+    y: 400},
+    150,
+    10
+  ));
+  this.addPlatform(new Platform({
+    x: 200,
+    y: 500},
+    150,
+    10
+  ));
+  this.addPlatform(new Platform({
+    x: 300,
+    y: 600},
+    150,
+    10
+  ));
+  this.addPlatform(new Platform({
+    x: 50,
+    y: 700},
+    150,
+    10
+  ));
+  this.addPlatform(new Platform({
+    x: 150,
+    y: 900},
+    150,
+    10
+  ));
+  this.addPlatform(new Platform({
+    x: 200,
+    y: 1200},
     150,
     10
   ));
