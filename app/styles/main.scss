@@ -1,32 +1,88 @@
 @import "compass/css3";
-
+/*
 .container {
-  bottom: 0;
+  top: 0;
   left: 10px;
   min-height: 600px;
   overflow: hidden;
   position: absolute;
   right: 0;
   top: 10px;
+
+}*/
+.container {
+  left: 50%;
+  top: 50%;
+  overflow: hidden;
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  margin-left: -250px;
+  margin-top: -250px;
+  background:black;
+}
+.background {
+  height:2500px;
+  width: 500px;
+  position: absolute;
+  bottom:0px;
+  background: -webkit-linear-gradient(top, black, darkblue);
 }
 
+.view {
+height:500px;
+  }
+
+.platforms {
+  div {margin: 0; padding:0;}
+  div div {   position: absolute;
+              background: green;
+              @include border-radius(5px 5px 5px 5px);
+  }
+}
 .player {
   position: absolute;
-  left: 0;
-  top: 0;
-
+  left: 150px;
+  bottom: 50px;
+  width: 101px;
+  height: 110px;
+  margin-left: -34px;
+  margin-top: -81px;
   div {margin: 0; padding: 0;}
-  div div {background: #A4CA39; position: relative;}
+  div div {background: green; position: relative;}
+
+  .blanka {
+  width:101px;
+  height:110px;
+  background: url('/images/Sf-blanka.gif') no-repeat;
+  }
+
+
+  .blankaJump {
+  background: url('/images/Blanka-rolling.gif') no-repeat;
+  }
+  .blankaWalk {
+  -webkit-animation: walk 1s infinite;
+  width:105px;
+  }
+  .blankaLeft {
+    @include transform(scale(-1,1));
+  }
+
+
 
   .android {
     height: 402px; width: 278px;
-    margin-left: 58px;
+    margin-left: 12px;
+
+    @include transform-origin(0, 0);
+    @include transform(scale(0.20, 0.20));
   }
 
   .head {
     width: 220px; height: 100px;
     top: 32px;
-    
+
     @include border-radius(110px 110px 0 0);
     
     @include transition(all 0.1s ease-in);
@@ -79,4 +135,47 @@
   .r_arm {right: -58px;}
   .l_leg {left: 45px;}
   .r_leg {right: 45px;}
+}
+
+@-webkit-keyframes walk {
+  from {
+    background: url('/images/blankawalk-1.png') no-repeat;
+    width:115px;
+    height:101px;
+  }
+  25% {
+    background: url('/images/blankawalk-2.png') no-repeat;
+    width:94px;
+    height:101px;
+  }
+  37.5% {
+    background: url('/images/blankawalk-3.png') no-repeat;
+    width:85px;
+    height:101px;
+  }
+  50% {
+    background: url('/images/blankawalk-4.png') no-repeat;
+    width:92px;
+    height:101px;
+  }
+  62.5% {
+    background: url('/images/blankawalk-5.png') no-repeat;
+    width:108px;
+    height:101px;
+  }
+  75% {
+    background: url('/images/blankawalk-6.png') no-repeat;
+    width:87px;
+    height:101px;
+  }
+  87.5% {
+    background: url('/images/blankawalk-7.png') no-repeat;
+    width:90px;
+    height:99px;
+  }
+  to {
+    background: url('/images/blankawalk-8.png') no-repeat;
+    width:102px;
+    height:99px;
+  }
 }
