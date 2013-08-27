@@ -72,7 +72,7 @@ define(['controls','platform'], function(controls,Platform) {
         this.el.blanka.toggleClass('blankaJump');
       }
     }
-
+    //TODO: this.el.blanka.toggleClass('blankaJump',this.jumping); fer þá alltaf þegar this.jumping er true;
     // Update UI
     this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0)');
   };
@@ -84,16 +84,19 @@ define(['controls','platform'], function(controls,Platform) {
         //checka hvort playerinn sé að falla niður
         if(this.vel.y>=0){
           //checkar 15pixla bil hvort að playerinn sé að fara lenda á platform eða sé búinn að fara í gegn (-5)
-          if(10>=objects[i].pos.y+this.pos.y &&objects[i].pos.y+this.pos.y>-5){
+          if(10>=objects[i].pos.y+this.pos.y-35 &&objects[i].pos.y+this.pos.y-35>-10){
             //checkar x hnit hvort playerinn sé að hitta á platformið á x ás, bæti við 40pixlum báðum meginn því characterinn er miklu stærri en hnitið.
             if(this.pos.x+40 >= objects[i].pos.x && this.pos.x-40 <= objects[i].pos.x+objects[i].width){
               this.vel.y = 0;//set velocity í 0 til að stoppa.
               this.pos.y = -objects[i].pos.y; //set pos.y þar sem platforminn er (notaði margin á platforms til að hann væri ofaná.)
+              this.vel.y = -JUMP_VELOCITY;
+
+              /*
               if(this.jumping == true)//hopp animations eins og áður.
               {
                 this.jumping = false;
                 this.el.blanka.toggleClass('blankaJump');
-              }
+              }*/
             }
           }
         }
