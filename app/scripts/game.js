@@ -1,6 +1,7 @@
 /*global define, $ */
 
 define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
+  var VIEWPORT_PADDING = 250;
   /**
    * Main game class.
    * @param {Element} el DOM element containig the game.
@@ -13,10 +14,8 @@ define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
     this.player = new Player(this.el.find('.player'));
     this.viewEl = el.find('.view');
     this.platforms = this.el.find('.platforms'); 
-    this.viewPortY = 0;
+    this.viewport = {x:0,y:0,width:500,height:500};
     this.objects = [];
-    this.i = 1;
-    console.log(this.viewEl);
 
     // Cache a bound onFrame since we need it each frame.
     this.onFrame = this.onFrame.bind(this);
@@ -38,6 +37,21 @@ define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
   };
 
   Game.prototype.updateView = function() {
+    var minY = this.viewport.y;// - VIEWPORT_PADDING;
+    var maxY = this.viewport.y + this.viewport.height - VIEWPORT_PADDING;
+
+    var playerY = -this.player.pos.y;
+    if(playerY < minY) {
+      this.viewport.y = playerY;// + VIEWPORT_PADDING;
+    } else if(playerY > maxY){
+      this.viewport.y = playerY - this.viewport.height + VIEWPORT_PADDING;
+    }
+    this.viewEl.css('transform', 'translate3d(0px,'+(this.viewport.y)+'px,0)');
+    /*console.log("playerY:"+playerY);
+    console.log("y:"+this.viewport.y);
+    console.log("MAX:"+maxY);
+    console.log("MIN:"+minY);*/
+    /*
     //this.viewEl.css('transform', 'translate3d(0px,'+this.i+'px,0)');
     //this.i++;
     var diff = this.viewPortY + this.player.pos.y;
@@ -48,7 +62,7 @@ define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
     //else if(this.player.pos.y == 0){
       //this.viewEl.css('transform', 'translate3d(0px,0px,0)');
       //this.viewportY = 0;
-    //}
+    //}*/
 
     
   }
@@ -68,7 +82,10 @@ define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
     // Restart the onFrame loop
     this.lastFrame = +new Date() / 1000;
     requestAnimFrame(this.onFrame);
-
+  /**
+  * Starting position
+  */
+  this.player.pos.x = 250;
   /**
   * Creating objects
   */
@@ -87,43 +104,49 @@ define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
   this.addPlatform(new Platform({
     x: 150,
     y: 300},
-    150,
+    10,
     10
   ));
   this.addPlatform(new Platform({
     x: 50,
     y: 400},
-    150,
+    20,
     10
   ));
   this.addPlatform(new Platform({
     x: 200,
     y: 500},
-    150,
+    30,
     10
   ));
   this.addPlatform(new Platform({
     x: 300,
     y: 600},
-    150,
+    40,
     10
   ));
   this.addPlatform(new Platform({
     x: 50,
     y: 700},
-    150,
+    50,
+    10
+  ));
+  this.addPlatform(new Platform({
+    x: 300,
+    y: 800},
+    60,
     10
   ));
   this.addPlatform(new Platform({
     x: 150,
     y: 900},
-    150,
+    70,
     10
   ));
   this.addPlatform(new Platform({
-    x: 200,
-    y: 1200},
-    150,
+    x: 50,
+    y: 1000},
+    80,
     10
   ));
   };
