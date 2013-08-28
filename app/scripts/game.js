@@ -1,7 +1,7 @@
 /*global define, $ */
 
 define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
-  var VIEWPORT_PADDING = 50;
+  var VIEWPORT_PADDING = 250;
   /**
    * Main game class.
    * @param {Element} el DOM element containig the game.
@@ -37,17 +37,20 @@ define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
   };
 
   Game.prototype.updateView = function() {
-    var minY = this.viewport.y + VIEWPORT_PADDING;
+    var minY = this.viewport.y;// - VIEWPORT_PADDING;
     var maxY = this.viewport.y + this.viewport.height - VIEWPORT_PADDING;
 
-    var playerY = this.player.pos.y+100;
+    var playerY = -this.player.pos.y;
     if(playerY < minY) {
-      this.viewport.y = playerY - VIEWPORT_PADDING;
+      this.viewport.y = playerY;// + VIEWPORT_PADDING;
     } else if(playerY > maxY){
       this.viewport.y = playerY - this.viewport.height + VIEWPORT_PADDING;
     }
-    this.viewEl.css('transform', 'translate3d(0px,'+(-this.viewport.y)+'px,0)');
-    console.log(this.viewport.y);
+    this.viewEl.css('transform', 'translate3d(0px,'+(this.viewport.y)+'px,0)');
+    console.log("playerY:"+playerY);
+    console.log("y:"+this.viewport.y);
+    console.log("MAX:"+maxY);
+    console.log("MIN:"+minY);
     /*
     //this.viewEl.css('transform', 'translate3d(0px,'+this.i+'px,0)');
     //this.i++;
