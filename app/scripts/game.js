@@ -47,10 +47,10 @@ define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
       this.viewport.y = playerY - this.viewport.height + VIEWPORT_PADDING;
     }
     this.viewEl.css('transform', 'translate3d(0px,'+(this.viewport.y)+'px,0)');
-    console.log("playerY:"+playerY);
+    /*console.log("playerY:"+playerY);
     console.log("y:"+this.viewport.y);
     console.log("MAX:"+maxY);
-    console.log("MIN:"+minY);
+    console.log("MIN:"+minY);*/
     /*
     //this.viewEl.css('transform', 'translate3d(0px,'+this.i+'px,0)');
     //this.i++;
