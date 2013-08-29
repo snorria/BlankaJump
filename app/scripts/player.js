@@ -132,7 +132,7 @@ define(['controls'], function(controls) {
 
       // What up?
       if (distanceSq < minDistanceSq) {
-        if(centerY> enemy.pos.y+enemy.radius){
+        if(centerY> enemy.pos.y+enemy.radius-2){
           that.vel.y = -JUMP_VELOCITY;
           enemy.dead = true;
           that.game.score*=2;

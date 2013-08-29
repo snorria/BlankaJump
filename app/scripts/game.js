@@ -75,7 +75,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     y: 500},
     30,
     10
-  ));/*
+  ));
   this.addPlatform(new Platform({
     x: 300,
     y: 600},
@@ -87,7 +87,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     y: 700},
     50,
     10
-  ));
+  ));/*
   this.addPlatform(new Platform({
     x: 300,
     y: 800},
@@ -164,9 +164,17 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
       if(this.viewport.y>this.lastSpawnY){
         //console.log("adding enemy");
         //console.log("this.viewport.y"+this.viewport.y);
-        this.addPlatform(new Platform({x: Math.random()*(this.viewport.width-100)-50, y: (this.viewport.y+this.viewport.height-100)}, Math.random()*(this.viewport.width/2)+50,10));
-        this.addEnemy(new Dhalsim({start:{x: Math.random()*(this.viewport.width-100)+50, y: (this.viewport.y+this.viewport.height)}, end:{x: Math.random()*(this.viewport.width-100)+50, y: (this.viewport.y+this.viewport.height)}}));
-        this.lastSpawnY = this.lastSpawnY + 200;
+        this.objectsSpawned++;
+        if(Math.random()>1.0-(this.objectsSpawned/1000)){
+          if(this.enemySpawn)
+            this.addEnemy(new Dhalsim({start:{x: Math.random()*(this.viewport.width-100)+50, y: (this.viewport.y+this.viewport.height)}, end:{x: Math.random()*(this.viewport.width-100)+50, y: (this.viewport.y+this.viewport.height)}}));
+          this.enemySpawn = !this.enemySpawn;
+        
+        }
+        
+        this.addPlatform(new Platform({x: Math.random()*(this.viewport.width-100)-50, y: (this.viewport.y+this.viewport.height)}, Math.random()*((this.viewport.width-this.objectsSpawned)/2)+50,10));
+        
+        this.lastSpawnY = this.lastSpawnY + 100;
       }
 
     }
@@ -232,6 +240,8 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     this.viewport = {x:0,y:0,width:500,height:800};
     this.lastSpawnY = 0;
     this.score = 0;
+    this.enemySpawn = true;
+    this.objectsSpawned = 0;
     // Then start.
     this.unFreezeGame();
   };
