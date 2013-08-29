@@ -24,5 +24,9 @@ var Dhalsim = function(options) {
     // Update UI
     this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + (-this.pos.y) + 'px,0)');
   };
+  Dhalsim.prototype.taunt = function() {
+  	console.log("lol");
+  	this.el.addClass('dhalsimDance');
+  }
   return Dhalsim;
 });

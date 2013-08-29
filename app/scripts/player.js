@@ -135,6 +135,7 @@ define(['controls'], function(controls) {
         if(centerY> enemy.pos.y+enemy.radius){
           that.vel.y = -JUMP_VELOCITY;
           enemy.dead = true;
+          that.game.score*=2;
         } else {
           that.game.gameOver();
         }

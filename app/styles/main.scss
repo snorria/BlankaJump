@@ -56,8 +56,28 @@ height:500px;
   /*margin-bottom:-56px;*/
   background: url('/images/Dhalsim-float.gif') no-repeat;
 }
+.dhalsimDance {
+  background: url('/images/dhalsim-dance.gif') no-repeat;
+  width:137px;
+  height:112px;
+}
 .objects {
   div {z-index:3;}
+}
+.hud {
+  background: green;
+  
+  position: fixed;
+  bottom: 0;
+  right: 50px;
+  
+  height: 20px;
+  width: 130px;
+  
+  padding: 10px;
+  @include border-radius(5px 5px 0px 0px);
+  text-align: center;
+  font-family: sans-serif;
 }
 .player {
   position: absolute;

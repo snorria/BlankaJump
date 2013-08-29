@@ -8,13 +8,13 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
    * @constructor
    */
 
-  //wtf is this?
   var Game = function(el) {
     this.el = el;
     this.player = new Player(this.el.find('.player'),this);
     this.viewEl = this.el.find('.view');
     this.objectsEl = this.el.find('.objects');
     this.platforms = this.el.find('.platforms'); 
+    this.hudEl = $('.hud');
     this.objects = [];
     this.isPlaying = false;
 
@@ -133,9 +133,13 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     }
 
     this.updateView();
+    this.updateHud();
 
     // Request next frame.
     requestAnimFrame(this.onFrame);
+  };
+  Game.prototype.updateHud = function() {
+    this.hudEl.text(this.score);
   };
 
   Game.prototype.updateView = function() {
@@ -149,6 +153,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     } else if(playerY > maxY){
       //hækka viewport.y
       this.viewport.y = playerY - this.viewport.height + VIEWPORT_PADDING;
+      this.score+=1;
       //remova objects out of view
       var that = this;
       this.forEachObject(function(object) {
@@ -159,7 +164,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
       if(this.viewport.y>this.lastSpawnY){
         console.log("adding enemy");
         console.log("this.viewport.y"+this.viewport.y);
-        this.addPlatform(new Platform({x: Math.random()*400-50, y: (this.viewport.y+500)}, Math.random()*200+50,10));
+        this.addPlatform(new Platform({x: Math.random()*400-50, y: (this.viewport.y+400)}, Math.random()*200+50,10));
         this.addEnemy(new Dhalsim({start:{x: Math.random()*400+50, y: (this.viewport.y+500)}, end:{x: Math.random()*400+50, y: (this.viewport.y+500)}}));
         this.lastSpawnY = this.lastSpawnY + 200;
       }
@@ -201,13 +206,15 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
 
 
   Game.prototype.gameOver = function() {
+    this.forEachEnemy(function(e) { e.taunt();});
+
     this.freezeGame();
     alert('You are game over! Sorry man...');
 
     var game = this;
     setTimeout(function() {
       game.start();
-    }, 0);
+    }, 1000);
   };
 
   /**
@@ -224,6 +231,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     this.player.reset();
     this.viewport = {x:0,y:0,width:500,height:500};
     this.lastSpawnY = 200;
+    this.score = 0;
     // Then start.
     this.unFreezeGame();
   };
