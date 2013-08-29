@@ -22,11 +22,11 @@
   background:black;
 }
 .background {
-  height:2500px;
+  height:30000px;
   width: 500px;
   position: absolute;
   bottom:0px;
-  background: -webkit-linear-gradient(top, black, darkblue);
+  background: -webkit-linear-gradient(top, purple,black);
 }
 
 .view {
@@ -38,8 +38,12 @@ height:500px;
   div {
     margin-bottom:45px;
     position: absolute;
-    background: green;
-    @include border-radius(5px 5px 5px 5px);
+    background: -webkit-linear-gradient(left,green,yellow);
+    z-index: 2;
+    border:1px solid black;
+    outline:1px solid white;
+    /*border-color:white;*/
+    @include border-radius(3px 3px 3px 3px);
   }
 }
 .dhalsim {
@@ -52,12 +56,16 @@ height:500px;
   /*margin-bottom:-56px;*/
   background: url('/images/Dhalsim-float.gif') no-repeat;
 }
+.objects {
+  div {z-index:3;}
+}
 .player {
   position: absolute;
   left: 0px;
   bottom: 50px;
   width: 85px;/*101px fyrir walk*/
   height: 70px;/*110px fyrir walk*/
+  z-index: 4;
   margin-left: -42px;
   margin-top: -35px;
   div {margin: 0; padding: 0;}

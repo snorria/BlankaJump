@@ -1,6 +1,6 @@
 /*global define, $ */
 
-define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
+define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhalsim,controls) {
   var VIEWPORT_PADDING = 250;
   /**
    * Main game class.
@@ -106,13 +106,8 @@ define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
   ));
 
   this.addEnemy(new Dhalsim({start:{x: 250, y: 300}, end:{x: 400, y: 350}}));
-
-  /*this.addEnemy(new Dhalsim({
-    x: 400,
-    y: 300},
-    300,
-    500
-  ));*/
+  this.addEnemy(new Dhalsim({start:{x: 100, y: 700}, end:{x: 450, y: 850}}));
+  this.addEnemy(new Dhalsim({start:{x: 200, y: 1050}, end:{x: 50, y: 800}}));
   };
 
   /**
