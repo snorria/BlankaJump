@@ -1,7 +1,7 @@
 /*global define, $ */
 
 define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhalsim,controls) {
-  var VIEWPORT_PADDING = 250;
+  var VIEWPORT_PADDING = 400;
   /**
    * Main game class.
    * @param {Element} el DOM element containig the game.
@@ -162,10 +162,10 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
         }
       });
       if(this.viewport.y>this.lastSpawnY){
-        console.log("adding enemy");
-        console.log("this.viewport.y"+this.viewport.y);
-        this.addPlatform(new Platform({x: Math.random()*400-50, y: (this.viewport.y+400)}, Math.random()*200+50,10));
-        this.addEnemy(new Dhalsim({start:{x: Math.random()*400+50, y: (this.viewport.y+500)}, end:{x: Math.random()*400+50, y: (this.viewport.y+500)}}));
+        //console.log("adding enemy");
+        //console.log("this.viewport.y"+this.viewport.y);
+        this.addPlatform(new Platform({x: Math.random()*(this.viewport.width-100)-50, y: (this.viewport.y+this.viewport.height-100)}, Math.random()*(this.viewport.width/2)+50,10));
+        this.addEnemy(new Dhalsim({start:{x: Math.random()*(this.viewport.width-100)+50, y: (this.viewport.y+this.viewport.height)}, end:{x: Math.random()*(this.viewport.width-100)+50, y: (this.viewport.y+this.viewport.height)}}));
         this.lastSpawnY = this.lastSpawnY + 200;
       }
 
@@ -209,7 +209,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     this.forEachEnemy(function(e) { e.taunt();});
 
     this.freezeGame();
-    alert('You are game over! Sorry man...');
+    alert('Game over! Score: '+this.score);
 
     var game = this;
     setTimeout(function() {
@@ -229,8 +229,8 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     // Set the stage.
     this.createWorld();
     this.player.reset();
-    this.viewport = {x:0,y:0,width:500,height:500};
-    this.lastSpawnY = 200;
+    this.viewport = {x:0,y:0,width:500,height:800};
+    this.lastSpawnY = 0;
     this.score = 0;
     // Then start.
     this.unFreezeGame();
