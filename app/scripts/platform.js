@@ -14,5 +14,6 @@ var Platform = function(pos,width,height) {
   });
 };
 
+  Platform.prototype.onFrame = function() {};
   return Platform;
 });
