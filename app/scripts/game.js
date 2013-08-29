@@ -105,12 +105,14 @@ define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
     10
   ));
 
-  this.addEnemy(new Dhalsim({
+  this.addEnemy(new Dhalsim({start:{x: 250, y: 300}, end:{x: 400, y: 350}}));
+
+  /*this.addEnemy(new Dhalsim({
     x: 400,
     y: 300},
-    67,
-    88
-  ));
+    300,
+    500
+  ));*/
   };
 
   /**
