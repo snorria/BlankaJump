@@ -14,6 +14,10 @@ var Platform = function(pos,width,height) {
   });
 };
 
-  Platform.prototype.onFrame = function() {};
+  Platform.prototype.onFrame = function() {
+    if(this.dead){
+      this.el.remove();
+    }
+  };
   return Platform;
 });

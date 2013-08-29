@@ -38,12 +38,14 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
   };
 
   Game.prototype.createWorld = function() {
+    //earth
   this.addPlatform(new Platform({
     x: 0,
     y: 0},
     500,
     10
   ));
+  
   this.addPlatform(new Platform({
     x: 400,
     y: 150},
@@ -73,7 +75,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     y: 500},
     30,
     10
-  ));
+  ));/*
   this.addPlatform(new Platform({
     x: 300,
     y: 600},
@@ -103,11 +105,11 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     y: 1000},
     80,
     10
-  ));
+  ));*/
 
-  this.addEnemy(new Dhalsim({start:{x: 250, y: 300}, end:{x: 400, y: 350}}));
+  /*this.addEnemy(new Dhalsim({start:{x: 250, y: 300}, end:{x: 400, y: 350}}));
   this.addEnemy(new Dhalsim({start:{x: 100, y: 700}, end:{x: 450, y: 850}}));
-  this.addEnemy(new Dhalsim({start:{x: 200, y: 1050}, end:{x: 50, y: 800}}));
+  this.addEnemy(new Dhalsim({start:{x: 200, y: 1050}, end:{x: 50, y: 800}}));*/
   };
 
   /**
@@ -145,7 +147,23 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
       this.gameOver();
       //this.viewport.y = playerY;// + VIEWPORT_PADDING;
     } else if(playerY > maxY){
+      //hækka viewport.y
       this.viewport.y = playerY - this.viewport.height + VIEWPORT_PADDING;
+      //remova objects out of view
+      var that = this;
+      this.forEachObject(function(object) {
+        if(object.pos.y < that.viewport.y- VIEWPORT_PADDING/2){
+          object.dead = true;
+        }
+      });
+      if(this.viewport.y>this.lastSpawnY){
+        console.log("adding enemy");
+        console.log("this.viewport.y"+this.viewport.y);
+        this.addPlatform(new Platform({x: Math.random()*400-50, y: (this.viewport.y+500)}, Math.random()*200+50,10));
+        this.addEnemy(new Dhalsim({start:{x: Math.random()*400+50, y: (this.viewport.y+500)}, end:{x: Math.random()*400+50, y: (this.viewport.y+500)}}));
+        this.lastSpawnY = this.lastSpawnY + 200;
+      }
+
     }
     this.viewEl.css('transform', 'translate3d(0px,'+(this.viewport.y)+'px,0)');
     /*console.log("playerY:"+playerY);
@@ -205,6 +223,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     this.createWorld();
     this.player.reset();
     this.viewport = {x:0,y:0,width:500,height:500};
+    this.lastSpawnY = 200;
     // Then start.
     this.unFreezeGame();
   };
@@ -220,6 +239,16 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
   Game.prototype.forEachEnemy = function(handler) {
     for (var i = 0, e; e = this.objects[i]; i++) {
       if (e instanceof Dhalsim) {
+        handler(e);
+      }
+    }
+  };
+  Game.prototype.forEachObject = function(handler){
+    for (var i = 0, e; e = this.objects[i]; i++) {
+      if (e instanceof Dhalsim) {
+        handler(e);
+      }
+      if (e instanceof Platform) {
         handler(e);
       }
     }

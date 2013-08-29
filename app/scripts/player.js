@@ -2,8 +2,8 @@
 
 define(['controls'], function(controls) {
 
-  var PLAYER_SPEED = 400; //á að vera 800
-  var JUMP_VELOCITY = 900;
+  var PLAYER_SPEED = 800; //á að vera 800
+  var JUMP_VELOCITY = 1000;
   var GRAVITY = 2000;
   var HELL_Y = 2000;
   var PLAYER_HALF_WIDTH = 30;
