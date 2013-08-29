@@ -3,7 +3,7 @@
 define(['controls'], function(controls) {
 
   var PLAYER_SPEED = 400; //á að vera 800
-  var JUMP_VELOCITY = 800;
+  var JUMP_VELOCITY = 900;
   var GRAVITY = 2000;
   var HELL_Y = 2000;
   var PLAYER_HALF_WIDTH = 30;
@@ -20,6 +20,8 @@ define(['controls'], function(controls) {
     this.turnedRight = true;
     this.pos = { x: 250, y: 0 };
     this.vel = { x: 0, y: 0 };
+    controls.keys.right = false;
+    controls.keys.left = false;
   }
 
   Player.prototype.onFrame = function(delta) {
@@ -117,7 +119,7 @@ define(['controls'], function(controls) {
   Player.prototype.checkEnemies = function() {
     
     var centerX = this.pos.x;
-    var centerY = -this.pos.y + 20;
+    var centerY = -this.pos.y + 35;
     var that = this;
     this.game.forEachEnemy(function(enemy) {
       // Distance squared
@@ -130,7 +132,13 @@ define(['controls'], function(controls) {
 
       // What up?
       if (distanceSq < minDistanceSq) {
-        that.game.gameOver();
+        if(centerY> enemy.pos.y+enemy.radius){
+          that.vel.y = -JUMP_VELOCITY;
+          enemy.dead = true;
+        } else {
+          that.game.gameOver();
+        }
+
       }
     });
   
