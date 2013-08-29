@@ -117,7 +117,7 @@ define(['controls'], function(controls) {
   Player.prototype.checkEnemies = function() {
     
     var centerX = this.pos.x;
-    var centerY = -this.pos.y - 40;
+    var centerY = -this.pos.y + 20;
     var that = this;
     this.game.forEachEnemy(function(enemy) {
       // Distance squared

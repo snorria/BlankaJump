@@ -109,7 +109,7 @@ define(['player','platform','dhalsim'], function(Player,Platform,Dhalsim) {
     x: 400,
     y: 300},
     67,
-    112
+    88
   ));
   };
 

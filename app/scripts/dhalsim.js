@@ -5,7 +5,7 @@ var Dhalsim = function(pos,width,height) {
   this.pos = pos;
   this.width = width;
   this.height = height;
-  this.radius = width;
+  this.radius = width/2;
   //this.rightX = this.pos.x+this.width;
   this.el.css({
     left: this.pos.x,
