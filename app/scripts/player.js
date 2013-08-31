@@ -22,6 +22,7 @@ define(['controls'], function(controls) {
     this.vel = { x: 0, y: 0 };
     controls.keys.right = false;
     controls.keys.left = false;
+    this.combo = 0;
   }
 
   Player.prototype.onFrame = function(delta) {
@@ -38,9 +39,9 @@ define(['controls'], function(controls) {
 
 
     //mouse
-    /*if(controls.keys.mouse != this.pos.x){
-      this.pos.x = controls.keys.mouse-860;
-    }*/
+    if(controls.keys.mouse != this.pos.x){
+      this.pos.x = controls.keys.mouse-700;
+    }
     /*
     // Jumping
     if (controls.keys.space && !this.jumping) {
@@ -111,6 +112,7 @@ define(['controls'], function(controls) {
           that.vel.y = 0;
           that.jumping = true;
           that.vel.y = -JUMP_VELOCITY;
+          this.combo = 0;
         }
       }
     });
@@ -135,7 +137,9 @@ define(['controls'], function(controls) {
         if(centerY> enemy.pos.y+enemy.radius-2){
           that.vel.y = -JUMP_VELOCITY;
           enemy.dead = true;
-          that.game.score*=2;
+          that.combo++;
+          that.game.score+=(10*that.combo);
+          that.game.messageEl.text(that.combo+" hit COMBO!");
         } else {
           that.game.gameOver();
         }

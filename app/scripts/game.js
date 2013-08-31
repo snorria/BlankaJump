@@ -15,6 +15,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     this.objectsEl = this.el.find('.objects');
     this.platforms = this.el.find('.platforms'); 
     this.hudEl = $('.hud');
+    this.messageEl = $('.message');
     this.objects = [];
     this.isPlaying = false;
 
@@ -153,7 +154,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     } else if(playerY > maxY){
       //hækka viewport.y
       this.viewport.y = playerY - this.viewport.height + VIEWPORT_PADDING;
-      this.score+=1;
+      this.score++;
       //remova objects out of view
       var that = this;
       this.forEachObject(function(object) {
@@ -165,14 +166,14 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
         //console.log("adding enemy");
         //console.log("this.viewport.y"+this.viewport.y);
         this.objectsSpawned++;
-        if(Math.random()>1.0-(this.objectsSpawned/1000)){
+        if(true){//Math.random()>1.0-(this.objectsSpawned/1000)){
           if(this.enemySpawn)
             this.addEnemy(new Dhalsim({start:{x: Math.random()*(this.viewport.width-100)+50, y: (this.viewport.y+this.viewport.height)}, end:{x: Math.random()*(this.viewport.width-100)+50, y: (this.viewport.y+this.viewport.height)}}));
           this.enemySpawn = !this.enemySpawn;
         
         }
         
-        this.addPlatform(new Platform({x: Math.random()*(this.viewport.width-100)-50, y: (this.viewport.y+this.viewport.height)}, Math.random()*((this.viewport.width-this.objectsSpawned)/2)+50,10));
+        //this.addPlatform(new Platform({x: Math.random()*(this.viewport.width-100)-50, y: (this.viewport.y+this.viewport.height)}, Math.random()*((this.viewport.width-this.objectsSpawned)/2)+50,10));
         
         this.lastSpawnY = this.lastSpawnY + 100;
       }
