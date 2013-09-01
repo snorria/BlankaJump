@@ -38,9 +38,9 @@ define(['controls'], function(controls) {
 
 
     //mouse
-    if(controls.keys.mouse != this.pos.x){
+    /*if(controls.keys.mouse != this.pos.x){
       this.pos.x = controls.keys.mouse-700;
-    }
+    }*/
     /*
     // Jumping
     if (controls.keys.space && !this.jumping) {
@@ -111,6 +111,7 @@ define(['controls'], function(controls) {
           that.vel.y = 0;
           that.jumping = true;
           that.vel.y = -JUMP_VELOCITY;
+          that.game.messageEl.text("");
           this.combo = 0;
         }
       }

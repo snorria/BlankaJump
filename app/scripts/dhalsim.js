@@ -3,7 +3,7 @@ define(function() {
 var Dhalsim = function(options) {
   this.el = $('<div class="dhalsim"></div>');
   this.pos = {x:0,y:0};
-  this.radius = 15;
+  this.radius = 14;
   this.start = options.start;
   this.end = options.end;
   this.duration = options.duration || 3;
