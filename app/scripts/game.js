@@ -44,50 +44,50 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     x: 0,
     y: 0},
     500,
-    10
+    5
   ));
   
   this.addPlatform(new Platform({
     x: 400,
     y: 150},
     150,
-    10
+    5
   ));
   this.addPlatform(new Platform({
     x: 50,
     y: 50},
     150,
-    10
+    5
   ));
   this.addPlatform(new Platform({
     x: 150,
     y: 300},
     50,
-    10
+    5
   ));
   this.addPlatform(new Platform({
     x: 50,
     y: 400},
     20,
-    10
+    5
   ));
   this.addPlatform(new Platform({
     x: 200,
     y: 500},
     30,
-    10
+    5
   ));
   this.addPlatform(new Platform({
     x: 300,
     y: 600},
     40,
-    10
+    5
   ));
   this.addPlatform(new Platform({
     x: 50,
     y: 700},
     50,
-    10
+    5
   ));/*
   this.addPlatform(new Platform({
     x: 300,
@@ -108,8 +108,8 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     10
   ));*/
 
-  /*this.addEnemy(new Dhalsim({start:{x: 250, y: 300}, end:{x: 400, y: 350}}));
-  this.addEnemy(new Dhalsim({start:{x: 100, y: 700}, end:{x: 450, y: 850}}));
+  this.addEnemy(new Dhalsim({start:{x: 250, y: 300}, end:{x: 400, y: 350}}));
+  /*this.addEnemy(new Dhalsim({start:{x: 100, y: 700}, end:{x: 450, y: 850}}));
   this.addEnemy(new Dhalsim({start:{x: 200, y: 1050}, end:{x: 50, y: 800}}));*/
   };
 
@@ -165,17 +165,17 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
       if(this.viewport.y>this.lastSpawnY){
         //console.log("adding enemy");
         //console.log("this.viewport.y"+this.viewport.y);
-        this.objectsSpawned++;
-        if(true){//Math.random()>1.0-(this.objectsSpawned/1000)){
+        this.objectsSpawned +=0.01;
+        /*if(true){//Math.random()>1.0-(this.objectsSpawned/1000)){
           if(this.enemySpawn)
             this.addEnemy(new Dhalsim({start:{x: Math.random()*(this.viewport.width-100)+50, y: (this.viewport.y+this.viewport.height)}, end:{x: Math.random()*(this.viewport.width-100)+50, y: (this.viewport.y+this.viewport.height)}}));
           this.enemySpawn = !this.enemySpawn;
         
-        }
+        }*/
         
-        //this.addPlatform(new Platform({x: Math.random()*(this.viewport.width-100)-50, y: (this.viewport.y+this.viewport.height)}, Math.random()*((this.viewport.width-this.objectsSpawned)/2)+50,10));
+        this.addPlatform(new Platform({x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, Math.random()*(this.viewport.width/this.objectsSpawned)+20,5));
         
-        this.lastSpawnY = this.lastSpawnY + 100;
+        this.lastSpawnY = this.lastSpawnY + 25;
       }
 
     }

@@ -3,11 +3,10 @@
 define(['controls'], function(controls) {
 
   var PLAYER_SPEED = 800; //á að vera 800
-  var JUMP_VELOCITY = 1000;
-  var GRAVITY = 2000;
+  var JUMP_VELOCITY = 750;
+  var GRAVITY = 1500;
   var HELL_Y = 2000;
-  var PLAYER_HALF_WIDTH = 30;
-  var PLAYER_RADIUS = 30;
+  var PLAYER_RADIUS = 20;
 
   var Player = function(el, game) {
     this.game = game;
@@ -106,7 +105,7 @@ define(['controls'], function(controls) {
         // Are inside X bounds.
         //console.log("that.pos.x;"+that.pos.x);
         //console.log("p.rightX:"+p.rightX);
-        if (that.pos.x + PLAYER_HALF_WIDTH >= p.pos.x && that.pos.x - PLAYER_HALF_WIDTH <= p.rightX) {
+        if (that.pos.x + PLAYER_RADIUS >= p.pos.x && that.pos.x - PLAYER_RADIUS <= p.rightX) {
           // COLLISION. Let's stop gravity.
           that.pos.y = -p.pos.y;
           that.vel.y = 0;
