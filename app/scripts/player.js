@@ -112,7 +112,7 @@ define(['controls'], function(controls) {
           that.jumping = true;
           that.vel.y = -JUMP_VELOCITY;
           that.game.messageEl.text("");
-          this.combo = 0;
+          that.combo = 0;
         }
       }
     });

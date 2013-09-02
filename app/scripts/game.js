@@ -14,12 +14,17 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     this.viewEl = this.el.find('.view');
     this.objectsEl = this.el.find('.objects');
     this.platforms = this.el.find('.platforms'); 
+    this.menuEl = this.el.find('.menu');
     this.hudEl = $('.hud');
     this.messageEl = $('.message');
     this.objects = [];
     this.isPlaying = false;
     this.objectPool = [];
 
+    var that = this;
+    this.menuEl.find('.play').click(function(){
+      that.start();
+    })
     // Cache a bound onFrame since we need it each frame.
     this.onFrame = this.onFrame.bind(this);
   };
@@ -27,27 +32,30 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
 
   Game.prototype.freezeGame = function() {
     this.isPlaying = false;
+    this.gameoverScreen();
   };
 
   Game.prototype.unFreezeGame = function() {
     if (!this.isPlaying) {
       this.isPlaying = true;
+      this.gameoverScreen();
 
       // Restart the onFrame loop
       this.lastFrame = +new Date() / 1000;
       requestAnimFrame(this.onFrame);
     }
   };
-
+  Game.prototype.gameoverScreen = function() {
+    this.menuEl.toggleClass('dead',!this.isPlaying);
+  };
   Game.prototype.createWorld = function() {
    /* numbers for what to spawn:
-    * 1. Platform
-    * 2. Dhalsim
+    * 0. Platform
+    * 1. Dhalsim
     * weighted random array.
     */
-    for(var i = 0;  i<100;i++){
-      this.objectPool.push(1);
-    }
+    this.objectPool[0] = 100;
+    this.objectPool[1] = 0;
 
 
     //earth
@@ -73,7 +81,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
   this.addPlatform(new Platform({
     x: 150,
     y: 300},
-    50,
+    60,
     5
   ));
   this.addPlatform(new Platform({
@@ -85,19 +93,19 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
   this.addPlatform(new Platform({
     x: 200,
     y: 500},
-    30,
+    60,
     5
   ));
   this.addPlatform(new Platform({
     x: 300,
     y: 600},
-    40,
+    70,
     5
   ));
   this.addPlatform(new Platform({
-    x: 50,
+    x: 400,
     y: 700},
-    50,
+    70,
     5
   ));/*
   this.addPlatform(new Platform({
@@ -119,7 +127,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     10
   ));*/
 
-  this.addEnemy(new Dhalsim({start:{x: 250, y: 300}, end:{x: 400, y: 350}}));
+  //this.addEnemy(new Dhalsim({start:{x: 250, y: 300}, end:{x: 400, y: 350}}));
   /*this.addEnemy(new Dhalsim({start:{x: 100, y: 700}, end:{x: 450, y: 850}}));
   this.addEnemy(new Dhalsim({start:{x: 200, y: 1050}, end:{x: 50, y: 800}}));*/
   };
@@ -178,10 +186,10 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
         //console.log("this.viewport.y"+this.viewport.y);
         this.objectsSpawned +=0.01;
         this.poolCounter++;
-        if(this.poolCounter === 100){
-          this.objectPool.push(1);//adda platform í poolið.
+        if(this.poolCounter === 50){
+          this.objectPool[0]++;//adda platform í poolið.
           if(this.viewport.y>1500){
-            this.objectPool.push(2); //eftir y:1500 þá byrja að spawna dhalsims
+            this.objectPool[1]++; //eftir y:1500 þá byrja að spawna dhalsims
           }
           this.poolCounter = 0;
         }
@@ -191,12 +199,13 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
           this.enemySpawn = !this.enemySpawn;
         
         }*/
-        var WhatToSpawn = this.objectPool[Math.floor(Math.random()*this.objectPool.length)];
+        
+        var WhatToSpawn = this.whatToSpawn();
         console.log(WhatToSpawn);
-        console.log("out of :"+ this.objectPool.length);
-        if(WhatToSpawn === 1){
+        console.log(this.objectPool);
+        if(WhatToSpawn === 0){
           this.addPlatform(new Platform({x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, Math.random()*(this.viewport.width/this.objectsSpawned)+20,5));
-        } else if (WhatToSpawn === 2) {
+        } else if (WhatToSpawn === 1) {
           this.addEnemy(new Dhalsim({start:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, end:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}}));
         }
         this.lastSpawnY = this.lastSpawnY + 30;
@@ -223,6 +232,18 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
 
     
   }
+  Game.prototype.whatToSpawn = function(){
+    var sum = this.objectPool.reduce(function(pv, cv) { return pv + cv; }, 0);
+    var probe = Math.floor(Math.random()*sum);
+    if(0<=probe && probe <= this.objectPool[0]){
+      return 0;
+    } else if (this.objectPool[0]<probe && probe <= this.objectPool[0]+this.objectPool[1]){
+      return 1;
+    } else {
+      return -1;//error?
+    }
+
+  }
 
 
   /**
@@ -242,19 +263,19 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     this.forEachEnemy(function(e) { e.taunt();});
 
     this.freezeGame();
-    alert('Game over! Score: '+this.score);
+    //alert('Game over! Score: '+this.score);
 
-    var game = this;
+    /*var game = this;
     setTimeout(function() {
       game.start();
-    }, 1000);
+    }, 1000);*/
   };
 
   /**
    * Starts the game.
    */
   Game.prototype.start = function() {
-
+    console.log("start");
     //Cleanup last game.
     this.objects.forEach(function(e) { e.el.remove(); });
     this.objects = [];

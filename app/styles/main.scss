@@ -12,13 +12,12 @@
 }*/
 .container {
   left: 50%;
-  top: 50%;
   overflow: hidden;
   position: absolute;
   width: 500px;
   height: 800px;
   margin-left: -250px;
-  margin-top: -250px;
+  /*margin-top: -250px;*/
   background:#032133;
 }
 .background {
@@ -32,6 +31,29 @@
 .view {
 height:800px;
   }
+.menu {
+  position:absolute;
+  left:500px;
+  bottom:0px;
+  height:800px;
+  width:500px;
+  z-index: 5;
+  text-align: center;
+  opacity: 1;
+  /*background: url('/images/deathscreen.png') no-repeat;
+  background: -webkit-linear-gradient(top,darkred,black);
+  @include transition(opacity 2s ease-in);*/
+  
+}
+.dead {
+  -webkit-animation: death 4s forwards;
+  left:0px;
+}
+.play {
+  position: absolute;
+  top:55%;
+  left:42%;
+}
 
 .platforms {
   div {margin: 0; padding:0;}
@@ -102,7 +124,6 @@ height:800px;
   height: 55px;/*110px fyrir walk*/
   z-index: 4;
   margin-left: -25px;
-  /*margin-top: -27px;*/
   div {margin: 0; padding: 0;}
   div div {background: green; position: relative;}
 
@@ -193,6 +214,22 @@ height:800px;
   .r_arm {right: -58px;}
   .l_leg {left: 45px;}
   .r_leg {right: 45px;}
+}
+
+@-webkit-keyframes death {
+  from {
+    background-color:black;
+    opacity: 0;
+  }
+  15% {
+    background-color:black;
+    background-image: none; 
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    background: url('/images/deathscreen.png') no-repeat;
+  }
 }
 
 @-webkit-keyframes walk {
