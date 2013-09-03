@@ -10,6 +10,9 @@
   top: 10px;
 
 }*/
+body {
+  background: black;
+}
 .container {
   left: 50%;
   overflow: hidden;
@@ -114,12 +117,12 @@ height:800px;
 .hud {
   background: green;
   
-  position: fixed;
+  position: absolute;
   bottom: 0;
-  right: 50px;
+  right: 0px;
   
   height: 20px;
-  width: 130px;
+  width: 370px;
   
   padding: 10px;
   @include border-radius(5px 5px 0px 0px);
@@ -129,9 +132,9 @@ height:800px;
 .message {
   background: green;
   
-  position: fixed;
+  position: absolute;
   bottom: 0;
-  right: 180px;
+  left: 0px;
   
   height: 20px;
   width: 130px;

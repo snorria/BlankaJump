@@ -171,7 +171,7 @@ define(['player','platform','dhalsim','controls','movingplatform'], function(Pla
   };
 
   Game.prototype.updateView = function() {
-    var minY = this.viewport.y - VIEWPORT_PADDING/4;
+    var minY = this.viewport.y - VIEWPORT_PADDING/6;
     var maxY = this.viewport.y + this.viewport.height - VIEWPORT_PADDING;
 
     var playerY = -this.player.pos.y;

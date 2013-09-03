@@ -74,7 +74,7 @@ define(['controls'], function(controls) {
     // Collision Detection
     this.checkPlatforms(oldY);
     this.checkEnemies();
-    this.checkGameOver();
+    //this.checkGameOver();
     // Update UI
     this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0)');
 
