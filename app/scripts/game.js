@@ -151,6 +151,7 @@ define(['player','platform','dhalsim','controls','movingplatform'], function(Pla
         delta = now - this.lastFrame;
     this.lastFrame = now;
 
+    controls.onFrame(delta);
     this.player.onFrame(delta);
     for (var i = 0, e; e = this.objects[i]; i++) {
       e.onFrame(delta);

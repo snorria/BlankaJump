@@ -16,6 +16,7 @@ define([], function() {
    */
   var Controls = function() {
     this.keys = {};
+    this.inputVec = { x: 0, y: 0};
 
     $(window)
       .on('keydown', this.onKeyDown.bind(this))
@@ -40,6 +41,15 @@ define([], function() {
 
   Controls.prototype.onMouseMove = function(e) {
     this.keys['mouse'] = e.pageX;
+  };
+  Controls.prototype.onFrame = function() {
+    if (this.keys.right) {
+      this.inputVec.x = 1;
+    } else if (this.keys.left) {
+      this.inputVec.x = -1;
+    } else {
+      this.inputVec.x = 0;
+    }
   };
   
   // Export singleton.

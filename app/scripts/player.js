@@ -26,7 +26,7 @@ define(['controls'], function(controls) {
 
   Player.prototype.onFrame = function(delta) {
     // Player input
-    if (controls.keys.right) {
+    /*if (controls.keys.right) {
       this.vel.x = PLAYER_SPEED;
       this.turnedRight = true;
     } else if (controls.keys.left) {
@@ -34,7 +34,8 @@ define(['controls'], function(controls) {
       this.turnedRight = false;
     } else {
       this.vel.x = 0;
-    }
+    }*/
+    this.vel.x = controls.inputVec.x * PLAYER_SPEED;
 
 
     //mouse
@@ -80,7 +81,7 @@ define(['controls'], function(controls) {
 
     this.el.blanka.toggleClass('blankaJump',this.jumping);
     this.el.blanka.toggleClass('blankaWalk',this.vel.x !=0 && !this.jumping);
-    this.el.blanka.toggleClass('blankaLeft',!this.turnedRight);
+    this.el.blanka.toggleClass('blankaLeft',this.vel.x<0);//!this.turnedRight);
   };
 
   Player.prototype.checkGameOver = function() {
