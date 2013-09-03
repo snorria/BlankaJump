@@ -1,6 +1,6 @@
 /*global define, $ */
 
-define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhalsim,controls) {
+define(['player','platform','dhalsim','controls','movingplatform'], function(Player,Platform,Dhalsim,controls,MovingPlatform) {
   var VIEWPORT_PADDING = 400;
   /**
    * Main game class.
@@ -57,10 +57,12 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
    /* numbers for what to spawn:
     * 0. Platform
     * 1. Dhalsim
+    * 2. MovingPlatform
     * weighted random array.
     */
-    this.objectPool[0] = 100;
+    this.objectPool[0] = 0;
     this.objectPool[1] = 0;
+    this.objectPool[2] = 100
 
 
     //earth
@@ -131,6 +133,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     80,
     10
   ));*/
+  this.addPlatform(new MovingPlatform({start:{x: 0,y:200}, end:{x:200,y:200}}));
 
   this.addEnemy(new Dhalsim({start:{x: 250, y: 300}, end:{x: 400, y: 350}}));
   /*this.addEnemy(new Dhalsim({start:{x: 100, y: 700}, end:{x: 450, y: 850}}));
@@ -192,9 +195,12 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
         this.objectsSpawned +=0.01;
         this.poolCounter++;
         if(this.poolCounter === 50){
-          this.objectPool[0]++;//adda platform í poolið.
-          if(this.viewport.y>1500){
+          //this.objectPool[0]++;//adda platform í poolið.
+          if(this.viewport.y>1500 && this.objectPool[1]<11){
             this.objectPool[1]++; //eftir y:1500 þá byrja að spawna dhalsims
+          }
+          if(this.viewport.y>500){
+            this.objectPool[2]++;
           }
           this.poolCounter = 0;
         }
@@ -212,8 +218,10 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
           this.addPlatform(new Platform({x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, Math.random()*(this.viewport.width/this.objectsSpawned)+20,5));
         } else if (WhatToSpawn === 1) {
           this.addEnemy(new Dhalsim({start:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, end:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}}));
+        } else if (WhatToSpawn === 2) {
+          this.addPlatform(new MovingPlatform({start:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, end:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}}));
         }
-        this.lastSpawnY = this.lastSpawnY + 30;
+        this.lastSpawnY = this.lastSpawnY + 35;
       }
 
     }
@@ -236,7 +244,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     //}*/
 
     
-  }
+  };
   Game.prototype.whatToSpawn = function(){
     var sum = this.objectPool.reduce(function(pv, cv) { return pv + cv; }, 0);
     var probe = Math.floor(Math.random()*sum);
@@ -244,11 +252,13 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
       return 0;
     } else if (this.objectPool[0]<probe && probe <= this.objectPool[0]+this.objectPool[1]){
       return 1;
+    } else if (this.objectPool[0]+this.objectPool[1]<probe && probe <= this.objectPool[0]+this.objectPool[1]+this.objectPool[2]){
+      return 2;
     } else {
       return -1;//error?
     }
 
-  }
+  };
 
 
   /**
@@ -257,7 +267,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
   Game.prototype.addPlatform = function(platform) {
     this.objects.push(platform);
     this.platforms.append(platform.el);
-  }
+  };
   Game.prototype.addEnemy = function(enemy) {
     this.objects.push(enemy);
     this.objectsEl.append(enemy.el);
@@ -305,6 +315,9 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
       if (e instanceof Platform) {
         handler(e);
       }
+      if (e instanceof MovingPlatform) {
+        handler(e);
+      }
     }
   };
 
@@ -321,6 +334,9 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
         handler(e);
       }
       if (e instanceof Platform) {
+        handler(e);
+      }
+      if (e instanceof MovingPlatform) {
         handler(e);
       }
     }

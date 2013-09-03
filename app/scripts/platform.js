@@ -5,7 +5,7 @@ var Platform = function(pos,width,height) {
   this.pos = pos;
   this.width = width;
   this.height = height;
-  this.rightX = this.pos.x+this.width;
+  this.rightX = this.pos.x+this.width;  
   this.el.css({
     left: this.pos.x,
     bottom: this.pos.y,
