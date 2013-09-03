@@ -45,9 +45,17 @@ height:800px;
   @include transition(opacity 2s ease-in);*/
   
 }
+.start {
+  background: url('/images/startscreen.png');
+  left: 0px;
+}
 .dead {
   -webkit-animation: death 4s forwards;
   left:0px;
+}
+.dead button{
+  opacity: 1;
+  -webkit-animation: buttonLoad 4s forwards;
 }
 .play {
   position: absolute;
@@ -229,6 +237,17 @@ height:800px;
   to {
     opacity: 1;
     background: url('/images/deathscreen.png') no-repeat;
+  }
+}
+@-webkit-keyframes buttonLoad {
+  from {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

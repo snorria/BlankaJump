@@ -24,7 +24,8 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     var that = this;
     this.menuEl.find('.play').click(function(){
       that.start();
-    })
+    });
+    this.menuEl.addClass('start');
     // Cache a bound onFrame since we need it each frame.
     this.onFrame = this.onFrame.bind(this);
   };
@@ -47,6 +48,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
   };
   Game.prototype.gameoverScreen = function() {
     this.menuEl.toggleClass('dead',!this.isPlaying);
+    this.el.find('.play').text('Play Again');
   };
   Game.prototype.createWorld = function() {
    /* numbers for what to spawn:
@@ -275,6 +277,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
    * Starts the game.
    */
   Game.prototype.start = function() {
+    this.menuEl.removeClass('start');
     console.log("start");
     //Cleanup last game.
     this.objects.forEach(function(e) { e.el.remove(); });
