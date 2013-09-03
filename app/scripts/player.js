@@ -108,7 +108,7 @@ define(['controls'], function(controls) {
         //console.log("p.rightX:"+p.rightX);
         if (that.pos.x + PLAYER_RADIUS >= p.pos.x && that.pos.x - PLAYER_RADIUS <= p.rightX) {
           // COLLISION. Let's stop gravity.
-          that.pos.y = -p.pos.y;
+          that.pos.y = -p.pos.y-1;
           that.vel.y = 0;
           that.jumping = true;
           that.vel.y = -JUMP_VELOCITY;

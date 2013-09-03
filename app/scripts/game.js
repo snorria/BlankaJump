@@ -1,6 +1,6 @@
 /*global define, $ */
 
-define(['player','platform','dhalsim','controls','movingplatform'], function(Player,Platform,Dhalsim,controls,MovingPlatform) {
+define(['player','platform','dhalsim','controls','movingplatform','fallingplatform'], function(Player,Platform,Dhalsim,controls,MovingPlatform,FallingPlatform) {
   var VIEWPORT_PADDING = 400;
   /**
    * Main game class.
@@ -59,12 +59,15 @@ define(['player','platform','dhalsim','controls','movingplatform'], function(Pla
     * 1. Dhalsim
     * 2. MovingPlatform
     * 3. verticalMovingPlatform
+    * 4. FallingPlatform
     * weighted random array.
     */
-    this.objectPool[0] = 100;
+    this.objectPool[0] = 70;
     this.objectPool[1] = 0;
     this.objectPool[2] = 10;
     this.objectPool[3] = 10;
+    this.objectPool[4] = 10;
+    
 
 
     //earth
@@ -205,6 +208,7 @@ define(['player','platform','dhalsim','controls','movingplatform'], function(Pla
           if(this.viewport.y>500){
             this.objectPool[2]++;
             this.objectPool[3]++;
+            this.objectPool[4]++;
           }
           this.poolCounter = 0;
         }
@@ -226,7 +230,10 @@ define(['player','platform','dhalsim','controls','movingplatform'], function(Pla
           this.addPlatform(new MovingPlatform({start:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, end:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}}));
         } else if (WhatToSpawn === 3) {
           var randomX = Math.random()*this.viewport.width;
-          this.addPlatform(new MovingPlatform({start:{x: randomX, y: (this.viewport.y+this.viewport.height)}, end:{x: randomX, y: (this.viewport.y+this.viewport.height-150)}}));
+          //duration sett í 10 til þess að maður detti ekki stundum í gegnum platform sem movar of hratt.
+          this.addPlatform(new MovingPlatform({start:{x: randomX, y: (this.viewport.y+this.viewport.height)}, end:{x: randomX, y: (this.viewport.y+this.viewport.height-150)}, duration: 10}));
+        } else if (WhatToSpawn === 4) {
+          this.addPlatform(new FallingPlatform({pos:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}}));
         }
         this.lastSpawnY = this.lastSpawnY + 35;
       }
@@ -263,7 +270,9 @@ define(['player','platform','dhalsim','controls','movingplatform'], function(Pla
       return 2;
     } else if (this.objectPool[0]+this.objectPool[1]+this.objectPool[2]<probe && probe <= this.objectPool[0]+this.objectPool[1]+this.objectPool[2]+this.objectPool[3]){
       return 3;
-    } else {
+    } else if (this.objectPool[0]+this.objectPool[1]+this.objectPool[2]+this.objectPool[3]<probe && probe <= this.objectPool[0]+this.objectPool[1]+this.objectPool[2]+this.objectPool[3]+this.objectPool[4]){
+      return 4;
+    }else {
       return -1;//error?
     }
 
@@ -327,6 +336,9 @@ define(['player','platform','dhalsim','controls','movingplatform'], function(Pla
       if (e instanceof MovingPlatform) {
         handler(e);
       }
+      if (e instanceof FallingPlatform) {
+        handler(e);
+      }
     }
   };
 
@@ -346,6 +358,9 @@ define(['player','platform','dhalsim','controls','movingplatform'], function(Pla
         handler(e);
       }
       if (e instanceof MovingPlatform) {
+        handler(e);
+      }
+      if (e instanceof FallingPlatform) {
         handler(e);
       }
     }

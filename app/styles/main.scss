@@ -95,6 +95,20 @@ height:800px;
 
     @include border-radius(3px 3px 3px 3px);
 }
+.fallingPlatform {
+    margin-bottom:45px;
+    position: absolute;
+    background: -webkit-linear-gradient(left,purple,orange);
+    z-index: 2;
+    border:1px solid black;
+    outline:1px solid white;
+    width:50px;
+    height:5px;
+    left:0px;
+    bottom:0px;
+
+    @include border-radius(3px 3px 3px 3px);
+}
 .dhalsim {
   position:absolute;
   width:33px;
