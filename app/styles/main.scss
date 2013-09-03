@@ -55,7 +55,7 @@ height:800px;
 }
 .dead button{
   opacity: 1;
-  -webkit-animation: buttonLoad 4s forwards;
+  -webkit-animation: buttonLoad 2s forwards;
 }
 .play {
   position: absolute;
@@ -81,7 +81,7 @@ height:800px;
   height:38px;
   left:0px;
   bottom:0px;
-  margin-left:-16px;
+  margin-left:-15px;
   background: url('/images/Dhalsim-float.gif') no-repeat;
   background-size:100% 120%;
 }

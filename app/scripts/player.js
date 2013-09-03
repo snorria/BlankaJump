@@ -2,7 +2,7 @@
 
 define(['controls'], function(controls) {
 
-  var PLAYER_SPEED = 800; //á að vera 800
+  var PLAYER_SPEED = 600; //á að vera 800
   var JUMP_VELOCITY = 750;
   var GRAVITY = 1500;
   var HELL_Y = 2000;
@@ -54,10 +54,10 @@ define(['controls'], function(controls) {
     var oldY = this.pos.y;
     this.pos.x += delta * this.vel.x;
     this.pos.y += delta * this.vel.y;
-    if(this.pos.x >525){
-      this.pos.x = -25;
-    } else if( this.pos.x <-25){
-      this.pos.x = 525;
+    if(this.pos.x >510){
+      this.pos.x = -10;
+    } else if( this.pos.x <-10){
+      this.pos.x = 510;
     }
 /*
     // Collision with ground

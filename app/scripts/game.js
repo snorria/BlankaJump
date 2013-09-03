@@ -15,6 +15,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     this.objectsEl = this.el.find('.objects');
     this.platforms = this.el.find('.platforms'); 
     this.menuEl = this.el.find('.menu');
+    this.playButton = this.menuEl.find('.play');
     this.hudEl = $('.hud');
     this.messageEl = $('.message');
     this.objects = [];
@@ -22,10 +23,11 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     this.objectPool = [];
 
     var that = this;
-    this.menuEl.find('.play').click(function(){
+    this.playButton.click(function(){
       that.start();
     });
     this.menuEl.addClass('start');
+    this.playButton.focus();
     // Cache a bound onFrame since we need it each frame.
     this.onFrame = this.onFrame.bind(this);
   };
@@ -48,7 +50,8 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
   };
   Game.prototype.gameoverScreen = function() {
     this.menuEl.toggleClass('dead',!this.isPlaying);
-    this.el.find('.play').text('Play Again');
+    this.playButton.text('Play Again');
+    //this.playButton.focus();
   };
   Game.prototype.createWorld = function() {
    /* numbers for what to spawn:
@@ -62,9 +65,9 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
 
     //earth
   this.addPlatform(new Platform({
-    x: 0,
+    x: -25,
     y: 0},
-    500,
+    550,
     5
   ));
   
@@ -129,7 +132,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
     10
   ));*/
 
-  //this.addEnemy(new Dhalsim({start:{x: 250, y: 300}, end:{x: 400, y: 350}}));
+  this.addEnemy(new Dhalsim({start:{x: 250, y: 300}, end:{x: 400, y: 350}}));
   /*this.addEnemy(new Dhalsim({start:{x: 100, y: 700}, end:{x: 450, y: 850}}));
   this.addEnemy(new Dhalsim({start:{x: 200, y: 1050}, end:{x: 50, y: 800}}));*/
   };
@@ -165,7 +168,7 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
   };
 
   Game.prototype.updateView = function() {
-    var minY = this.viewport.y - VIEWPORT_PADDING/2;
+    var minY = this.viewport.y - VIEWPORT_PADDING/4;
     var maxY = this.viewport.y + this.viewport.height - VIEWPORT_PADDING;
 
     var playerY = -this.player.pos.y;
@@ -263,7 +266,6 @@ define(['player','platform','dhalsim','controls'], function(Player,Platform,Dhal
 
   Game.prototype.gameOver = function() {
     this.forEachEnemy(function(e) { e.taunt();});
-
     this.freezeGame();
     //alert('Game over! Score: '+this.score);
 
