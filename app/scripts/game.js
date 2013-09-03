@@ -58,11 +58,13 @@ define(['player','platform','dhalsim','controls','movingplatform'], function(Pla
     * 0. Platform
     * 1. Dhalsim
     * 2. MovingPlatform
+    * 3. verticalMovingPlatform
     * weighted random array.
     */
-    this.objectPool[0] = 0;
+    this.objectPool[0] = 100;
     this.objectPool[1] = 0;
-    this.objectPool[2] = 100
+    this.objectPool[2] = 10;
+    this.objectPool[3] = 10;
 
 
     //earth
@@ -88,31 +90,31 @@ define(['player','platform','dhalsim','controls','movingplatform'], function(Pla
   this.addPlatform(new Platform({
     x: 150,
     y: 300},
-    60,
+    200,
     5
   ));
   this.addPlatform(new Platform({
     x: 50,
     y: 400},
-    20,
+    200,
     5
   ));
   this.addPlatform(new Platform({
     x: 200,
     y: 500},
-    60,
+    150,
     5
   ));
   this.addPlatform(new Platform({
     x: 300,
     y: 600},
-    70,
+    250,
     5
   ));
   this.addPlatform(new Platform({
     x: 400,
     y: 700},
-    70,
+    200,
     5
   ));/*
   this.addPlatform(new Platform({
@@ -202,6 +204,7 @@ define(['player','platform','dhalsim','controls','movingplatform'], function(Pla
           }
           if(this.viewport.y>500){
             this.objectPool[2]++;
+            this.objectPool[3]++;
           }
           this.poolCounter = 0;
         }
@@ -216,11 +219,14 @@ define(['player','platform','dhalsim','controls','movingplatform'], function(Pla
         console.log(WhatToSpawn);
         console.log(this.objectPool);
         if(WhatToSpawn === 0){
-          this.addPlatform(new Platform({x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, Math.random()*(this.viewport.width/this.objectsSpawned)+20,5));
+          this.addPlatform(new Platform({x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, Math.random()*(this.viewport.width/this.objectsSpawned)+30,5));
         } else if (WhatToSpawn === 1) {
           this.addEnemy(new Dhalsim({start:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, end:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}}));
         } else if (WhatToSpawn === 2) {
           this.addPlatform(new MovingPlatform({start:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, end:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}}));
+        } else if (WhatToSpawn === 3) {
+          var randomX = Math.random()*this.viewport.width;
+          this.addPlatform(new MovingPlatform({start:{x: randomX, y: (this.viewport.y+this.viewport.height)}, end:{x: randomX, y: (this.viewport.y+this.viewport.height-150)}}));
         }
         this.lastSpawnY = this.lastSpawnY + 35;
       }
@@ -255,6 +261,8 @@ define(['player','platform','dhalsim','controls','movingplatform'], function(Pla
       return 1;
     } else if (this.objectPool[0]+this.objectPool[1]<probe && probe <= this.objectPool[0]+this.objectPool[1]+this.objectPool[2]){
       return 2;
+    } else if (this.objectPool[0]+this.objectPool[1]+this.objectPool[2]<probe && probe <= this.objectPool[0]+this.objectPool[1]+this.objectPool[2]+this.objectPool[3]){
+      return 3;
     } else {
       return -1;//error?
     }
@@ -305,7 +313,7 @@ define(['player','platform','dhalsim','controls','movingplatform'], function(Pla
     this.lastSpawnY = 0;
     this.score = 0;
     this.enemySpawn = true;
-    this.objectsSpawned = 1;
+    this.objectsSpawned = 3;
     this.messageEl.text("");
     // Then start.
     this.unFreezeGame();
