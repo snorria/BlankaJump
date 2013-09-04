@@ -135,7 +135,8 @@ define(['controls'], function(controls) {
 
       // What up?
       if (distanceSq < minDistanceSq) {
-        if(centerY> enemy.pos.y+enemy.radius-2){
+        //radius-3 til að geta farið í efrihelming og drepið.
+        if(centerY> enemy.pos.y+enemy.radius-3){
           that.vel.y = -JUMP_VELOCITY;
           enemy.dead = true;
           that.combo++;
