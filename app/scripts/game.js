@@ -63,13 +63,17 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     * 3. verticalMovingPlatform
     * 4. FallingPlatform
     * weighted random array.
-    */
+    *//*
     this.objectPool[0] = 70;
     this.objectPool[1] = 0;
     this.objectPool[2] = 10;
     this.objectPool[3] = 10;
-    this.objectPool[4] = 10;
-    
+    this.objectPool[4] = 10;*/
+    this.objectPool[0] = 10;
+    this.objectPool[1] = 10;
+    this.objectPool[2] = 10;
+    this.objectPool[3] = 20;
+    this.objectPool[4] = 20;
 
 
     //earth
@@ -212,6 +216,9 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
             this.objectPool[3]++;
             this.objectPool[4]++;
           }
+          if(this.viewport.y>3000){
+
+          }
           this.poolCounter = 0;
         }
         /*if(true){//Math.random()>1.0-(this.objectsSpawned/1000)){
@@ -284,9 +291,14 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
   /**
   * Adding objects
   */
+  //var counter = 0;
+  //var htmlobject;
   Game.prototype.addPlatform = function(platform) {
     this.objects.push(platform);
     this.platforms.append(platform.el);
+    //console.log(this.platforms);
+    //document.getElementById('platforms').innerHTML += platform.el.html;
+    //console.log(this.platforms);
   };
   Game.prototype.addEnemy = function(enemy) {
     this.objects.push(enemy);

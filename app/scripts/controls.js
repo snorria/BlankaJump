@@ -23,8 +23,8 @@ define([], function() {
     $(window)
       .on('keydown', this.onKeyDown.bind(this))
       .on('keyup', this.onKeyUp.bind(this))
-      .on('deviceorientation',this.onOrientation.bind(this))
-      .on('mousemove', this.onMouseMove.bind(this));
+      .on('deviceorientation',this.onOrientation.bind(this));
+      /*.on('mousemove', this.onMouseMove.bind(this));*/
   };
 
   Controls.prototype.onKeyDown = function(e) {
@@ -42,9 +42,9 @@ define([], function() {
     }
   };
 
-  Controls.prototype.onMouseMove = function(e) {
+  /*Controls.prototype.onMouseMove = function(e) {
     this.keys['mouse'] = e.pageX;
-  };
+  };*/
   Controls.prototype.onOrientation = function(e) {
     e = e.originalEvent;
     if (e.gamma == null) {
