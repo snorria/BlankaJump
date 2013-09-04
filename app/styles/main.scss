@@ -52,6 +52,9 @@ height:800px;
   background: url('/images/startscreen.png');
   left: 0px;
 }
+.start div{
+  opacity:0;
+}
 .dead {
   -webkit-animation: death 4s forwards;
   left:0px;
@@ -60,10 +63,21 @@ height:800px;
   opacity: 1;
   -webkit-animation: buttonLoad 2s forwards;
 }
+.dead div{
+  opacity: 1;
+  -webkit-animation: buttonLoad 2s forwards;
+}
 .play {
   position: absolute;
   top:55%;
-  left:42%;
+  left:50%;
+  background: -webkit-linear-gradient(top, #032133,black);
+  width:300px;
+  height:40px;
+  margin-left: -150px;
+  color:white;
+  text-align: center;
+  font-family: "Lucida Console", Monaco, monospace;
 }
 
 .platforms {
@@ -75,7 +89,7 @@ height:800px;
     border:1px solid black;
     outline:1px solid white;
 
-    @include border-radius(3px 3px 3px 3px);
+    /*@include border-radius(3px 3px 3px 3px);*/
   }
 }
 .platform {
@@ -93,8 +107,8 @@ height:800px;
     left:0px;
     bottom:0px;
 
-    @include border-radius(3px 3px 3px 3px);
-}
+    /*@include border-radius(3px 3px 3px 3px);
+*/}
 .fallingPlatform {
     margin-bottom:45px;
     position: absolute;
@@ -107,7 +121,7 @@ height:800px;
     left:0px;
     bottom:0px;
 
-    @include border-radius(3px 3px 3px 3px);
+    /*@include border-radius(3px 3px 3px 3px);*/
 }
 .dhalsim {
   position:absolute;
@@ -129,7 +143,7 @@ height:800px;
   div {z-index:3;}
 }
 .hud {
-  background: green;
+  background: -webkit-linear-gradient(top, #032133,black);
   
   position: absolute;
   bottom: 0;
@@ -140,11 +154,12 @@ height:800px;
   
   padding: 10px;
   @include border-radius(0px 5px 0px 0px);
+  color:white;
   text-align: center;
-  font-family: sans-serif;
+  font-family: "Lucida Console", Monaco, monospace;
 }
 .message {
-  background: green;
+  background: -webkit-linear-gradient(top, #032133,black);
   
   position: absolute;
   bottom: 0;
@@ -155,8 +170,25 @@ height:800px;
   
   padding: 10px;
   @include border-radius(5px 0px 0px 0px);
+  color:white;
   text-align: center;
-  font-family: sans-serif;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+.highscore {
+  background: -webkit-linear-gradient(top, #032133,black);
+  
+  position: absolute;
+  top:62%;
+  left:48%;
+  z-index: -1;
+  width:300px;
+  height:200px;
+  margin-left: -150px;  
+  padding: 10px;
+  @include border-radius(5px 5px 5px 5px);
+  color:white;
+  text-align: center;
+  font-family: "Lucida Console", Monaco, monospace;
 }
 .player {
   position: absolute;
@@ -263,7 +295,7 @@ height:800px;
     background-color:black;
     opacity: 0;
   }
-  15% {
+  25% {
     background-color:black;
     background-image: none; 
     opacity: 1;

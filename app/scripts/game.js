@@ -16,11 +16,13 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.platforms = this.el.find('.platforms'); 
     this.menuEl = this.el.find('.menu');
     this.playButton = this.menuEl.find('.play');
+    this.highscoreEl = this.el.find('.highscore');
     this.hudEl = $('.hud');
     this.messageEl = $('.message');
     this.objects = [];
     this.isPlaying = false;
     this.objectPool = [];
+    this.highScore = 0;
 
     var that = this;
     this.playButton.click(function(){
@@ -220,8 +222,8 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
         }*/
         
         var WhatToSpawn = this.whatToSpawn();
-        console.log(WhatToSpawn);
-        console.log(this.objectPool);
+        //console.log(WhatToSpawn);
+        //console.log(this.objectPool);
         if(WhatToSpawn === 0){
           this.addPlatform(new Platform({x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, Math.random()*(this.viewport.width/this.objectsSpawned)+30,5));
         } else if (WhatToSpawn === 1) {
@@ -294,6 +296,10 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
 
   Game.prototype.gameOver = function() {
     this.forEachEnemy(function(e) { e.taunt();});
+    if(this.score>this.highScore){
+      this.highScore=this.score;
+    }
+    this.highscoreEl.html('Your score was: '+this.score+' \nyour highscore is: '+ this.highScore).wrap('<pre />');
     this.freezeGame();
     //alert('Game over! Score: '+this.score);
 

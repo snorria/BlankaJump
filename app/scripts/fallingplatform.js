@@ -7,7 +7,7 @@ var FallingPlatform = function(options) {
   this.height = 5;
   this.rightX = this.pos.x+this.width;
   this.vel = {x:0,y:0};
-  this.GRAVITY = 10;
+  this.GRAVITY = 15;
 };
 
   FallingPlatform.prototype.onFrame = function(delta) {
