@@ -1,6 +1,6 @@
 /*global define, $ */
 
-define(['player','platform','dhalsim','controls','movingplatform','fallingplatform'], function(Player,Platform,Dhalsim,controls,MovingPlatform,FallingPlatform) {
+define(['player','platform','dhalsim','controls','movingplatform','fallingplatform','Howler'], function(Player,Platform,Dhalsim,controls,MovingPlatform,FallingPlatform,howler) {
   var VIEWPORT_PADDING = 400;
   /**
    * Main game class.
@@ -26,20 +26,20 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.sounds = {};
     this.mIsPressed = false;
     this.soundMute = false;
-    this.sounds.hit = new Howl({
+    this.sounds.hit = new howler.Howl({
       urls: ['/sounds/hit.mp3', '/sounds/hit.ogg','/sounds/hit.wav']
     });
-    this.sounds.gameover = new Howl({
+    this.sounds.gameover = new howler.Howl({
       urls: ['/sounds/gameover.mp3','/sounds/gameover.ogg','/sounds/gameover.wav']
     });
-    this.sounds.go = new Howl({
+    this.sounds.go = new howler.Howl({
       urls: ['/sounds/go.mp3', '/sounds/go.ogg', '/sounds/go.wav']
     });
-    this.sounds.step = new Howl({
+    this.sounds.step = new howler.Howl({
       urls: ['/sounds/frontstep.mp3','/sounds/frontstep.ogg','/sounds/frontstep.wav'],
       volume: 0.1
     });
-    this.sounds.theme = new Howl({
+    this.sounds.theme = new howler.Howl({
       urls: ['/sounds/theme.mp3','/sounds/theme.ogg','/sounds/theme.wav'],
       loop: true
     });
@@ -172,11 +172,11 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     if (controls.keys.m) {
       if(this.mIsPressed == false){
         if(this.soundMute){
-          Howler.unmute();
+          howler.Howler.unmute();
           this.soundMute = false;
         }
         else{
-          Howler.mute();
+          howler.Howler.mute();
           this.soundMute = true;
         }
         this.mIsPressed = true;

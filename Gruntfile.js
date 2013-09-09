@@ -157,7 +157,7 @@ module.exports = function (grunt) {
                 javascriptsDir: '<%= yeoman.app %>/scripts',
                 fontsDir: '<%= yeoman.app %>/styles/fonts',
                 importPath: '<%= yeoman.app %>/bower_components',
-                httpImagesPath: '/images',
+                httpImagesPath: 'web-app-game/images',
                 httpGeneratedImagesPath: '/images/generated',
                 httpFontsPath: '/styles/fonts',
                 relativeAssets: false
@@ -301,7 +301,7 @@ module.exports = function (grunt) {
                     cwd: '<%= yeoman.app %>',
                     dest: '.tmp',
                     src: [
-                        'bower_components/{,*/}*.js',
+                        'bower_components/{,*/,*/*/}*.js',
                         'scripts/{,*/}*.js'
                     ]
                 }]
@@ -316,7 +316,8 @@ module.exports = function (grunt) {
                         '*.{ico,png,txt}',
                         '.htaccess',
                         'images/{,*/}*.{webp,gif}',
-                        'styles/fonts/*'
+                        'styles/fonts/*',
+                        'sounds/*'
                     ]
                 }]
             },
