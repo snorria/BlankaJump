@@ -112,7 +112,7 @@ define(['controls'], function(controls) {
           that.vel.y = 0;
           that.jumping = true;
           that.vel.y = -JUMP_VELOCITY;
-          that.game.sounds.step.play();
+          that.game.sounds.step.play(); //Þetta ætti að vera á öllu nema android :(
           /*that.game.messageEl.text("");
           that.combo = 0;*/
         }
@@ -143,7 +143,7 @@ define(['controls'], function(controls) {
           that.combo++;
           that.game.score+=(10*that.combo);
           that.game.messageEl.text(that.combo+" hit COMBO!");
-          that.game.sounds.hit.play();
+          that.game.sounds.hit.play(); //Þetta ætti að vera á öllu nema android :(
         } else {
           that.game.gameOver();
         }

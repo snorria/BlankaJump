@@ -27,20 +27,20 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.mIsPressed = false;
     this.soundMute = false;
     this.sounds.hit = new Howl({
-      urls: ['/sounds/hit.wav']
+      urls: ['/sounds/hit.mp3', '/sounds/hit.ogg','/sounds/hit.wav']
     });
     this.sounds.gameover = new Howl({
-      urls: ['/sounds/gameover.wav']
+      urls: ['/sounds/gameover.mp3','/sounds/gameover.ogg','/sounds/gameover.wav']
     });
     this.sounds.go = new Howl({
-      urls: ['/sounds/go.wav']
+      urls: ['/sounds/go.mp3', '/sounds/go.ogg', '/sounds/go.wav']
     });
     this.sounds.step = new Howl({
-      urls: ['/sounds/frontstep.wav'],
+      urls: ['/sounds/frontstep.mp3','/sounds/frontstep.ogg','/sounds/frontstep.wav'],
       volume: 0.1
     });
     this.sounds.theme = new Howl({
-      urls: ['/sounds/theme.mp3'],
+      urls: ['/sounds/theme.mp3','/sounds/theme.ogg','/sounds/theme.wav'],
       loop: true
     });
 
@@ -59,14 +59,14 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.isPlaying = false;
     this.gameoverScreen();
     this.sounds.theme.stop();
-    this.sounds.gameover.play();
+    this.sounds.gameover.play(); //Þetta ætti að vera á öllu nema android :(
   };
 
   Game.prototype.unFreezeGame = function() {
     if (!this.isPlaying) {
       this.isPlaying = true;
       this.gameoverScreen();
-      this.sounds.go.play();
+      this.sounds.go.play(); //Þetta ætti að vera á öllu nema android :(
       this.sounds.theme.play();
       // Restart the onFrame loop
       this.lastFrame = +new Date() / 1000;
