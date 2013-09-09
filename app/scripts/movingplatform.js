@@ -3,13 +3,14 @@ define(function() {
 var MovingPlatform = function(options) {
   this.el = $('<div class="movingPlatform"></div>');
   this.pos = {x:0,y:0};
-  this.width = 50;
+  this.width = 70;
   this.height = 5;
   this.rightX = this.pos.x+this.width;
   this.start = options.start;
   this.end = options.end;
   this.duration = options.duration || 5;
   this.current = 0;
+  this.dead = false;
 };
 
   MovingPlatform.prototype.onFrame = function(delta) {

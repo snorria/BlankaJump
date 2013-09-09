@@ -81,19 +81,19 @@ height:800px;
 }
 
 .platforms {
-  div {margin: 0; padding:0;}
-  div {
-    margin-bottom:45px;
+  
+}
+.platform {
+  margin-bottom:45px;
+  left:0px;
+  bottom:0px;
+  background: -webkit-linear-gradient(left,green,yellow);
+  width:70px;
+  height:5px;
     position: absolute;
     z-index: 2;
     border:1px solid black;
     outline:1px solid white;
-
-    /*@include border-radius(3px 3px 3px 3px);*/
-  }
-}
-.platform {
-  background: -webkit-linear-gradient(left,green,yellow);
 }
 .movingPlatform {
     margin-bottom:45px;
@@ -102,7 +102,7 @@ height:800px;
     z-index: 2;
     border:1px solid black;
     outline:1px solid white;
-    width:50px;
+    width:70px;
     height:5px;
     left:0px;
     bottom:0px;
@@ -116,7 +116,7 @@ height:800px;
     z-index: 2;
     border:1px solid black;
     outline:1px solid white;
-    width:50px;
+    width:70px;
     height:5px;
     left:0px;
     bottom:0px;
@@ -142,6 +142,21 @@ height:800px;
 .objects {
   div {z-index:3;}
 }
+.health {
+  background: -webkit-linear-gradient(top, #032133,black);
+  
+  position: absolute;
+  bottom: 0;
+  right: 130px;
+  
+  height: 20px;
+  width: 200px;
+  
+  padding: 10px;
+  color:white;
+  text-align: center;
+  font-family: "Lucida Console", Monaco, monospace;
+}
 .hud {
   background: -webkit-linear-gradient(top, #032133,black);
   
@@ -150,7 +165,7 @@ height:800px;
   right: 0px;
   
   height: 20px;
-  width: 330px;
+  width: 130px;
   
   padding: 10px;
   @include border-radius(0px 5px 0px 0px);

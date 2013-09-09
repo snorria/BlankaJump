@@ -23,6 +23,26 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.isPlaying = false;
     this.objectPool = [];
     this.highScore = 0;
+    this.sounds = {};
+    this.mIsPressed = false;
+    this.soundMute = false;
+    this.sounds.hit = new Howl({
+      urls: ['/sounds/hit.wav']
+    });
+    this.sounds.gameover = new Howl({
+      urls: ['/sounds/gameover.wav']
+    });
+    this.sounds.go = new Howl({
+      urls: ['/sounds/go.wav']
+    });
+    this.sounds.step = new Howl({
+      urls: ['/sounds/frontstep.wav'],
+      volume: 0.1
+    });
+    this.sounds.theme = new Howl({
+      urls: ['/sounds/theme.mp3'],
+      loop: true
+    });
 
     var that = this;
     this.playButton.click(function(){
@@ -38,13 +58,16 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
   Game.prototype.freezeGame = function() {
     this.isPlaying = false;
     this.gameoverScreen();
+    this.sounds.theme.stop();
+    this.sounds.gameover.play();
   };
 
   Game.prototype.unFreezeGame = function() {
     if (!this.isPlaying) {
       this.isPlaying = true;
       this.gameoverScreen();
-
+      this.sounds.go.play();
+      this.sounds.theme.play();
       // Restart the onFrame loop
       this.lastFrame = +new Date() / 1000;
       requestAnimFrame(this.onFrame);
@@ -63,68 +86,52 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     * 3. verticalMovingPlatform
     * 4. FallingPlatform
     * weighted random array.
-    *//*
+    */
     this.objectPool[0] = 70;
     this.objectPool[1] = 0;
     this.objectPool[2] = 10;
     this.objectPool[3] = 10;
-    this.objectPool[4] = 10;*/
-    this.objectPool[0] = 10;
+    this.objectPool[4] = 10;
+    /*this.objectPool[0] = 10;
     this.objectPool[1] = 10;
     this.objectPool[2] = 10;
     this.objectPool[3] = 20;
-    this.objectPool[4] = 20;
+    this.objectPool[4] = 20;*/
 
 
     //earth
   this.addPlatform(new Platform({
-    x: -25,
-    y: 0},
-    550,
-    5
+    x: 250,
+    y: 0}
   ));
   
   this.addPlatform(new Platform({
     x: 400,
-    y: 150},
-    150,
-    5
+    y: 150}
   ));
   this.addPlatform(new Platform({
     x: 50,
-    y: 50},
-    150,
-    5
+    y: 50}
   ));
   this.addPlatform(new Platform({
     x: 150,
-    y: 300},
-    200,
-    5
+    y: 300}
   ));
   this.addPlatform(new Platform({
     x: 50,
-    y: 400},
-    200,
-    5
+    y: 400}
   ));
   this.addPlatform(new Platform({
     x: 200,
-    y: 500},
-    150,
-    5
+    y: 500}
   ));
   this.addPlatform(new Platform({
     x: 300,
-    y: 600},
-    250,
-    5
+    y: 600}
   ));
   this.addPlatform(new Platform({
     x: 400,
-    y: 700},
-    200,
-    5
+    y: 700}
   ));/*
   this.addPlatform(new Platform({
     x: 300,
@@ -162,6 +169,22 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
         delta = now - this.lastFrame;
     this.lastFrame = now;
 
+    if (controls.keys.m) {
+      if(this.mIsPressed == false){
+        if(this.soundMute){
+          Howler.unmute();
+          this.soundMute = false;
+        }
+        else{
+          Howler.mute();
+          this.soundMute = true;
+        }
+        this.mIsPressed = true;
+      }
+    }
+    else{
+      this.mIsPressed = false;
+    }
     controls.onFrame(delta);
     this.player.onFrame(delta);
     for (var i = 0, e; e = this.objects[i]; i++) {
@@ -216,9 +239,7 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
             this.objectPool[3]++;
             this.objectPool[4]++;
           }
-          if(this.viewport.y>3000){
-
-          }
+          
           this.poolCounter = 0;
         }
         /*if(true){//Math.random()>1.0-(this.objectsSpawned/1000)){
@@ -232,7 +253,7 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
         //console.log(WhatToSpawn);
         //console.log(this.objectPool);
         if(WhatToSpawn === 0){
-          this.addPlatform(new Platform({x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, Math.random()*(this.viewport.width/this.objectsSpawned)+30,5));
+          this.addPlatform(new Platform({x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}));
         } else if (WhatToSpawn === 1) {
           this.addEnemy(new Dhalsim({start:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, end:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}}));
         } else if (WhatToSpawn === 2) {

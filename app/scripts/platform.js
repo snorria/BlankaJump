@@ -1,23 +1,21 @@
 define(function() { 
 
-var Platform = function(pos,width,height) {
+var Platform = function(pos) {
   this.el = $('<div class="platform"></div>');
   this.pos = pos;
-  this.width = width;
-  this.height = height;
+  this.width = 70;
+  this.height = 5;
   this.rightX = this.pos.x+this.width;  
-  this.el.css({
-    left: this.pos.x,
-    bottom: this.pos.y,
-    width: this.width,
-    height: this.height
-  });
+  this.dead = false;
+  this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + (-this.pos.y) + 'px,0)');
+  
 };
 
   Platform.prototype.onFrame = function() {
     if(this.dead){
       this.el.remove();
     }
+
   };
   return Platform;
 });

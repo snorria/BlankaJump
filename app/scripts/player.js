@@ -2,8 +2,8 @@
 
 define(['controls'], function(controls) {
 
-  var PLAYER_SPEED = 600; //á að vera 800
-  var JUMP_VELOCITY = 750;
+  var PLAYER_SPEED = 600; 
+  var JUMP_VELOCITY = 750;//750 
   var GRAVITY = 1500;
   var HELL_Y = 2000;
   var PLAYER_RADIUS = 20;
@@ -112,6 +112,7 @@ define(['controls'], function(controls) {
           that.vel.y = 0;
           that.jumping = true;
           that.vel.y = -JUMP_VELOCITY;
+          that.game.sounds.step.play();
           /*that.game.messageEl.text("");
           that.combo = 0;*/
         }
@@ -142,6 +143,7 @@ define(['controls'], function(controls) {
           that.combo++;
           that.game.score+=(10*that.combo);
           that.game.messageEl.text(that.combo+" hit COMBO!");
+          that.game.sounds.hit.play();
         } else {
           that.game.gameOver();
         }

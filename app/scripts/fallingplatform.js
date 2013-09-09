@@ -3,11 +3,12 @@ define(function() {
 var FallingPlatform = function(options) {
   this.el = $('<div class="fallingPlatform"></div>');
   this.pos = options.pos;
-  this.width = 50;
+  this.width = 70;
   this.height = 5;
   this.rightX = this.pos.x+this.width;
   this.vel = {x:0,y:0};
   this.GRAVITY = 15;
+  this.dead = false;
 };
 
   FallingPlatform.prototype.onFrame = function(delta) {
