@@ -33,8 +33,11 @@ app.get('/', function(req, res){
 
 app.post('/', function(req, res){
 	console.log(req.body);
-	myGlobalData.list.push(req.body);
-	myGlobalData.list = _.sortBy(myGlobalData.list, function(obj){return obj.score * -1;});
+	var dis = _.find(myGlobalData.list, function(obj){return (obj.name == req.body.name && obj.score == req.body.score)});
+	if(dis === undefined){
+		myGlobalData.list.push(req.body);
+		myGlobalData.list = _.sortBy(myGlobalData.list, function(obj){return obj.score * -1;});
+	}
 });
 
 app.listen(15000);
