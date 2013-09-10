@@ -16,7 +16,10 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.platforms = this.el.find('.platforms'); 
     this.menuEl = this.el.find('.menu');
     this.playButton = this.menuEl.find('.play');
+    this.highscoreButton = this.menuEl.find('.highscoreButton');
     this.highscoreEl = this.el.find('.highscore');
+    this.highscoreListEl = this.el.find('.highscoreList');
+    this.highscoreListShowing = false;
     this.hudEl = $('.hud');
     this.messageEl = $('.message');
     this.objects = [];
@@ -48,12 +51,33 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.playButton.click(function(){
       that.start();
     });
+    /*this.highscoreButton.click(function(){
+      that.highscoreList();
+    });*/
+    $(document).on('click', '.highscoreButton', function (ev) {
+      that.highscoreList();
+    });
+
     this.menuEl.addClass('start');
     this.playButton.focus();
     // Cache a bound onFrame since we need it each frame.
     this.onFrame = this.onFrame.bind(this);
   };
 
+  Game.prototype.highscoreList = function() {
+    this.highscoreListEl.toggleClass('showList');
+    if(!this.highscoreListShowing){
+      $(document).find('.highscoreButton').text('Back');
+      this.highscoreListShowing = true;
+      $.get('likdis.servegame.com:15000', function(data) {
+        $('.scores').html(data);
+      });
+    } else{
+      $(document).find('.highscoreButton').text('Highscore List');
+      this.highscoreListShowing = false;
+    }
+
+  }
 
   Game.prototype.freezeGame = function() {
     this.isPlaying = false;
@@ -61,7 +85,6 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.sounds.theme.stop();
     this.sounds.gameover.play(); //Þetta ætti að vera á öllu nema android :(
   };
-
   Game.prototype.unFreezeGame = function() {
     if (!this.isPlaying) {
       this.isPlaying = true;
