@@ -3,7 +3,7 @@
 define(['controls'], function(controls) {
 
   var PLAYER_SPEED = 600; 
-  var JUMP_VELOCITY = 750;//750 
+  var JUMP_VELOCITY = 850;//750 
   var GRAVITY = 1500;
   var HELL_Y = 2000;
   var PLAYER_RADIUS = 20;

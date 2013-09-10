@@ -17,6 +17,7 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.menuEl = this.el.find('.menu');
     this.playButton = this.menuEl.find('.play');
     this.highscoreButton = this.menuEl.find('.highscoreButton');
+    this.highscoreSubmitButton = this.el.find('.highscoreSubmit');
     this.highscoreEl = this.el.find('.highscore');
     this.highscoreListEl = this.el.find('.highscoreList');
     this.highscoreListShowing = false;
@@ -29,6 +30,10 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.sounds = {};
     this.mIsPressed = false;
     this.soundMute = false;
+    this.sentScore = false;
+
+    /* Sounds: These are sounds from street fighter 4, along with the blanka theme from sf2.
+    */
     this.sounds.hit = new howler.Howl({
       urls: ['sounds/hit.mp3', 'sounds/hit.ogg','sounds/hit.wav']
     });
@@ -46,50 +51,96 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
       urls: ['sounds/theme.mp3','sounds/theme.ogg','sounds/theme.wav'],
       loop: true
     });
-
+    /* Click events for the buttons.
+    */
     var that = this;
     this.playButton.click(function(){
       that.start();
     });
-    /*this.highscoreButton.click(function(){
-      that.highscoreList();
-    });*/
     $(document).on('click', '.highscoreButton', function (ev) {
       that.highscoreList();
     });
-
+    this.highscoreSubmitButton.click(function(){
+      that.submitScore();
+    });
+    /* adding class start for the start menu.
+    */
     this.menuEl.addClass('start');
-    this.playButton.focus();
+    
     // Cache a bound onFrame since we need it each frame.
     this.onFrame = this.onFrame.bind(this);
   };
-
+  Game.prototype.submitScore = function(){
+    //getting name from the text box.
+    var userName = $('#name').val();
+    if(this.sentScore){//if you've already sent this score you can't do it again.
+      return;
+    }
+    if(userName === '' ||userName === null || typeof userName === "undefined"){//username is required. 
+      return;
+    }
+    if(typeof this.score === "undefined"){//if you haven't played yet.
+      return;
+    }
+    //grab the score and username and put them in a object.
+    var scoreobj = { name: userName,
+                  score: this.score};
+    ;
+    //send the object via post.
+    $.post('http://likdis.servegame.com:15000', scoreobj);
+    //grab a new list of scores.
+    $.getJSON('http://likdis.servegame.com:15000', function(data) {
+        var items = [];
+       
+        $.each(data, function(key, val) {
+          items.push('<li id="' + key + '">' + val.name + ':' + val.score+ '</li>');
+        });
+       $('.scores').empty();
+        $('<ol/>', {
+          'class': 'scorelist',
+          html: items.join('')
+        }).appendTo('.scores');
+      });
+    //set sentScore as true so you can't send it again.
+    this.sentScore = true;
+  };
   Game.prototype.highscoreList = function() {
+    //toggle class for the menus.
     this.highscoreListEl.toggleClass('showList');
     if(!this.highscoreListShowing){
       $(document).find('.highscoreButton').text('Back');
       this.highscoreListShowing = true;
-      $.get('likdis.servegame.com:15000', function(data) {
-        $('.scores').html(data);
+      //JSON ná í highscore
+      $.getJSON('http://likdis.servegame.com:15000', function(data) {
+        var items = [];
+       
+        $.each(data, function(key, val) {
+          items.push('<li id="' + key + '">' + val.name + ' - ' + val.score+ '</li>');
+        });
+       $('.scores').empty();
+        $('<ol/>', {
+          'class': 'scorelist',
+          html: items.join('')
+        }).appendTo('.scores');
       });
     } else{
       $(document).find('.highscoreButton').text('Highscore List');
       this.highscoreListShowing = false;
     }
 
-  }
+  };
 
   Game.prototype.freezeGame = function() {
     this.isPlaying = false;
     this.gameoverScreen();
     this.sounds.theme.stop();
-    this.sounds.gameover.play(); //Þetta ætti að vera á öllu nema android :(
+    this.sounds.gameover.play();
   };
   Game.prototype.unFreezeGame = function() {
     if (!this.isPlaying) {
       this.isPlaying = true;
       this.gameoverScreen();
-      this.sounds.go.play(); //Þetta ætti að vera á öllu nema android :(
+      this.sounds.go.play();
       this.sounds.theme.play();
       // Restart the onFrame loop
       this.lastFrame = +new Date() / 1000;
@@ -99,6 +150,7 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
   Game.prototype.gameoverScreen = function() {
     this.menuEl.toggleClass('dead',!this.isPlaying);
     this.playButton.text('Play Again');
+    this.sentScore = false;
     //this.playButton.focus();
   };
   Game.prototype.createWorld = function() {
@@ -115,19 +167,27 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.objectPool[2] = 10;
     this.objectPool[3] = 10;
     this.objectPool[4] = 10;
-    /*this.objectPool[0] = 10;
-    this.objectPool[1] = 10;
-    this.objectPool[2] = 10;
-    this.objectPool[3] = 20;
-    this.objectPool[4] = 20;*/
 
-
-    //earth
   this.addPlatform(new Platform({
     x: 250,
     y: 0}
   ));
-  
+  this.addPlatform(new Platform({
+    x: 150,
+    y: 0}
+  ));
+  this.addPlatform(new Platform({
+    x: 50,
+    y: 0}
+  ));
+  this.addPlatform(new Platform({
+    x: 350,
+    y: 0}
+  ));
+  this.addPlatform(new Platform({
+    x: 450,
+    y: 0}
+  ));
   this.addPlatform(new Platform({
     x: 400,
     y: 150}
@@ -155,25 +215,7 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
   this.addPlatform(new Platform({
     x: 400,
     y: 700}
-  ));/*
-  this.addPlatform(new Platform({
-    x: 300,
-    y: 800},
-    60,
-    10
   ));
-  this.addPlatform(new Platform({
-    x: 150,
-    y: 900},
-    70,
-    10
-  ));
-  this.addPlatform(new Platform({
-    x: 50,
-    y: 1000},
-    80,
-    10
-  ));*/
   this.addPlatform(new MovingPlatform({start:{x: 0,y:200}, end:{x:200,y:200}}));
 
   this.addEnemy(new Dhalsim({start:{x: 250, y: 300}, end:{x: 400, y: 350}}));
@@ -352,10 +394,7 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
 
   Game.prototype.gameOver = function() {
     this.forEachEnemy(function(e) { e.taunt();});
-    if(this.score>this.highScore){
-      this.highScore=this.score;
-    }
-    this.highscoreEl.html('Your score was: '+this.score+' \nyour highscore is: '+ this.highScore).wrap('<pre />');
+    this.highscoreEl.html('Your score was: '+this.score).wrap('<pre />');
     this.freezeGame();
     //alert('Game over! Score: '+this.score);
 
