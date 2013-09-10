@@ -5,7 +5,6 @@ define(['controls'], function(controls) {
   var PLAYER_SPEED = 600; 
   var JUMP_VELOCITY = 850;//750 
   var GRAVITY = 1500;
-  var HELL_Y = 2000;
   var PLAYER_RADIUS = 20;
 
   var Player = function(el, game) {
@@ -25,29 +24,9 @@ define(['controls'], function(controls) {
   }
 
   Player.prototype.onFrame = function(delta) {
-    // Player input
-    /*if (controls.keys.right) {
-      this.vel.x = PLAYER_SPEED;
-      this.turnedRight = true;
-    } else if (controls.keys.left) {
-      this.vel.x = -PLAYER_SPEED;
-      this.turnedRight = false;
-    } else {
-      this.vel.x = 0;
-    }*/
+    //x axis velocity.
     this.vel.x = controls.inputVec.x * PLAYER_SPEED;
 
-
-    //mouse
-    /*if(controls.keys.mouse != this.pos.x){
-      this.pos.x = controls.keys.mouse-700;
-    }*/
-    /*
-    // Jumping
-    if (controls.keys.space && !this.jumping) {
-      this.vel.y = -JUMP_VELOCITY;
-      this.jumping = true;
-    }*/
 
     // Gravity
     this.vel.y += GRAVITY * delta;
@@ -60,18 +39,7 @@ define(['controls'], function(controls) {
     } else if( this.pos.x <-10){
       this.pos.x = 510;
     }
-/*
-    // Collision with ground
-    if (this.pos.y > 0) {
-      this.pos.y = 0;
-      this.vel.y = 0;
-      if(this.jumping == true)
-      {
-        this.jumping = false;
-        //this.el.blanka.toggleClass('blankaJump');
-      }
-    }
-*/
+
     // Collision Detection
     this.checkPlatforms(oldY);
     this.checkEnemies();
@@ -84,37 +52,22 @@ define(['controls'], function(controls) {
     this.el.blanka.toggleClass('blankaLeft',this.vel.x<0);//!this.turnedRight);
   };
 
-  Player.prototype.checkGameOver = function() {
-    if (this.pos.y > HELL_Y){
-      this.game.gameOver();
-    }
-  }
 
   Player.prototype.checkPlatforms = function(oldY){
     var that = this;
 
     this.game.forEachPlatform(function(p) {
       // Are we crossing Y.
-      //console.log("p.y:"+p.pos.y);
-      //console.log("oldY:"+(-oldY));
-      //console.log("that.pos.y;"+(-that.pos.y));
       if (p.pos.y <= -oldY && p.pos.y > -that.pos.y && that.vel.y >=0) {
-        //console.log("lol");
-        //console.log("p.y:"+p.pos.y);
-        //console.log("oldY:"+oldY);
-        //console.log("that.pos.y;"+(-that.pos.y));
         // Are inside X bounds.
-        //console.log("that.pos.x;"+that.pos.x);
-        //console.log("p.rightX:"+p.rightX);
         if (that.pos.x + PLAYER_RADIUS >= p.pos.x && that.pos.x - PLAYER_RADIUS <= p.rightX) {
           // COLLISION. Let's stop gravity.
           that.pos.y = -p.pos.y-1;
           that.vel.y = 0;
           that.jumping = true;
           that.vel.y = -JUMP_VELOCITY;
-          that.game.sounds.step.play(); //Þetta ætti að vera á öllu nema android :(
-          /*that.game.messageEl.text("");
-          that.combo = 0;*/
+          that.game.sounds.step.play();
+          /**/
         }
       }
     });
@@ -145,7 +98,14 @@ define(['controls'], function(controls) {
           that.game.messageEl.text(that.combo+" hit COMBO!");
           that.game.sounds.hit.play(); //Þetta ætti að vera á öllu nema android :(
         } else {
-          that.game.gameOver();
+          if(that.combo >0){
+            that.game.messageEl.text("Dropped Combo");
+            that.combo = 0;
+            enemy.dead = true;
+            that.game.sounds.dropped.play();
+          } else {
+            that.game.gameOver();
+          }
         }
 
       }

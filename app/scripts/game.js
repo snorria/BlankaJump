@@ -51,6 +51,9 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
       urls: ['sounds/theme.mp3','sounds/theme.ogg','sounds/theme.wav'],
       loop: true
     });
+    this.sounds.dropped = new howler.Howl({
+      urls: ['sounds/dropped.mp3','sounds/dropped.ogg','sounds/dropped.wav']
+    });
     /* Click events for the buttons.
     */
     var that = this;
@@ -219,8 +222,6 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
   this.addPlatform(new MovingPlatform({start:{x: 0,y:200}, end:{x:200,y:200}}));
 
   this.addEnemy(new Dhalsim({start:{x: 250, y: 300}, end:{x: 400, y: 350}}));
-  /*this.addEnemy(new Dhalsim({start:{x: 100, y: 700}, end:{x: 450, y: 850}}));
-  this.addEnemy(new Dhalsim({start:{x: 200, y: 1050}, end:{x: 50, y: 800}}));*/
   };
 
   /**
@@ -290,13 +291,10 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
         }
       });
       if(this.viewport.y>this.lastSpawnY){
-        //console.log("adding enemy");
-        //console.log("this.viewport.y"+this.viewport.y);
-        this.objectsSpawned +=0.01;
         this.poolCounter++;
         if(this.poolCounter === 50){
           //this.objectPool[0]++;//adda platform í poolið.
-          if(this.viewport.y>1500 && this.objectPool[1]<11){
+          if(this.viewport.y>1500){
             this.objectPool[1]++; //eftir y:1500 þá byrja að spawna dhalsims
           }
           if(this.viewport.y>500){
@@ -304,19 +302,15 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
             this.objectPool[3]++;
             this.objectPool[4]++;
           }
+          if(this.viewport.y>500 && this.difficulty <60){
+            this.difficulty +=0.01;
+          }
+
           
           this.poolCounter = 0;
         }
-        /*if(true){//Math.random()>1.0-(this.objectsSpawned/1000)){
-          if(this.enemySpawn)
-            this.addEnemy(new Dhalsim({start:{x: Math.random()*(this.viewport.width-100)+50, y: (this.viewport.y+this.viewport.height)}, end:{x: Math.random()*(this.viewport.width-100)+50, y: (this.viewport.y+this.viewport.height)}}));
-          this.enemySpawn = !this.enemySpawn;
-        
-        }*/
         
         var WhatToSpawn = this.whatToSpawn();
-        //console.log(WhatToSpawn);
-        //console.log(this.objectPool);
         if(WhatToSpawn === 0){
           this.addPlatform(new Platform({x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}));
         } else if (WhatToSpawn === 1) {
@@ -330,27 +324,12 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
         } else if (WhatToSpawn === 4) {
           this.addPlatform(new FallingPlatform({pos:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}}));
         }
-        this.lastSpawnY = this.lastSpawnY + 35;
+        this.lastSpawnY = this.lastSpawnY + this.difficulty;
       }
 
     }
+    //moves the viewport.
     this.viewEl.css('transform', 'translate3d(0px,'+(this.viewport.y)+'px,0)');
-    /*console.log("playerY:"+playerY);
-    console.log("y:"+this.viewport.y);
-    console.log("MAX:"+maxY);
-    console.log("MIN:"+minY);*/
-    /*
-    //this.viewEl.css('transform', 'translate3d(0px,'+this.i+'px,0)');
-    //this.i++;
-    var diff = this.viewPortY + this.player.pos.y;
-    //if(diff < -100){
-      this.viewEl.css('transform', 'translate3d(0px,'+(-diff)+'px,0)');
-      this.viewportY = this.viewPortY+(-diff);
-    //}
-    //else if(this.player.pos.y == 0){
-      //this.viewEl.css('transform', 'translate3d(0px,0px,0)');
-      //this.viewportY = 0;
-    //}*/
 
     
   };
@@ -377,14 +356,9 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
   /**
   * Adding objects
   */
-  //var counter = 0;
-  //var htmlobject;
   Game.prototype.addPlatform = function(platform) {
     this.objects.push(platform);
     this.platforms.append(platform.el);
-    //console.log(this.platforms);
-    //document.getElementById('platforms').innerHTML += platform.el.html;
-    //console.log(this.platforms);
   };
   Game.prototype.addEnemy = function(enemy) {
     this.objects.push(enemy);
@@ -396,12 +370,6 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.forEachEnemy(function(e) { e.taunt();});
     this.highscoreEl.html('Your score was: '+this.score).wrap('<pre />');
     this.freezeGame();
-    //alert('Game over! Score: '+this.score);
-
-    /*var game = this;
-    setTimeout(function() {
-      game.start();
-    }, 1000);*/
   };
 
   /**
@@ -423,7 +391,7 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.lastSpawnY = 0;
     this.score = 0;
     this.enemySpawn = true;
-    this.objectsSpawned = 3;
+    this.difficulty = 35; //length between spawns
     this.messageEl.text("");
     // Then start.
     this.unFreezeGame();
