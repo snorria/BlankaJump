@@ -20,12 +20,15 @@ var allowCrossDomain = function(req, res, next) {
     }
 };
 var myGlobalData = {
-	list: []
+	list: [],
+	counter: 0
 };
 app.use(allowCrossDomain);
 
 app.get('/', function(req, res){
   res.send(myGlobalData.list);
+  myGlobalData.counter++;
+  console.log(myGlobalData.counter+'. dat request doe: '+new Date());
 });
 
 app.post('/', function(req, res){
