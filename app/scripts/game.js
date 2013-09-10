@@ -27,20 +27,20 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.mIsPressed = false;
     this.soundMute = false;
     this.sounds.hit = new howler.Howl({
-      urls: ['../sounds/hit.mp3', '../sounds/hit.ogg','../sounds/hit.wav']
+      urls: ['sounds/hit.mp3', 'sounds/hit.ogg','sounds/hit.wav']
     });
     this.sounds.gameover = new howler.Howl({
-      urls: ['../sounds/gameover.mp3','../sounds/gameover.ogg','../sounds/gameover.wav']
+      urls: ['sounds/gameover.mp3','sounds/gameover.ogg','sounds/gameover.wav']
     });
     this.sounds.go = new howler.Howl({
-      urls: ['../sounds/go.mp3', '../sounds/go.ogg', '../sounds/go.wav']
+      urls: ['sounds/go.mp3', 'sounds/go.ogg', 'sounds/go.wav']
     });
     this.sounds.step = new howler.Howl({
-      urls: ['../sounds/frontstep.mp3','../sounds/frontstep.ogg','../sounds/frontstep.wav'],
+      urls: ['sounds/frontstep.mp3','sounds/frontstep.ogg','sounds/frontstep.wav'],
       volume: 0.1
     });
     this.sounds.theme = new howler.Howl({
-      urls: ['../sounds/theme.mp3','../sounds/theme.ogg','../sounds/theme.wav'],
+      urls: ['sounds/theme.mp3','sounds/theme.ogg','sounds/theme.wav'],
       loop: true
     });
 
