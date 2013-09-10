@@ -43,13 +43,13 @@ height:800px;
   z-index: 5;
   text-align: center;
   opacity: 1;
-  /*background: url('/images/deathscreen.png') no-repeat;
+  /*background: url('../images/deathscreen.png') no-repeat;
   background: -webkit-linear-gradient(top,darkred,black);
   @include transition(opacity 2s ease-in);*/
   
 }
 .start {
-  background: url('/images/startscreen.png');
+  background: url('../images/startscreen.png');
   left: 0px;
 }
 .start div{
@@ -130,11 +130,11 @@ height:800px;
   left:0px;
   bottom:0px;
   margin-left:-15px;
-  background: url('/images/Dhalsim-float.gif') no-repeat;
+  background: url('../images/Dhalsim-float.gif') no-repeat;
   background-size:100% 120%;
 }
 .dhalsimDance {
-  background: url('/images/dhalsim-dance.gif') no-repeat;
+  background: url('../images/dhalsim-dance.gif') no-repeat;
   background-size:100% 100%;
   width:70px;
   height:80px;
@@ -219,13 +219,13 @@ height:800px;
   .blanka {
   width:101px;
   height:110px;
-  background: url('/images/Sf-blanka.gif') no-repeat;
+  background: url('../images/Sf-blanka.gif') no-repeat;
   background-size:50% 50%;
   }
 
 
   .blankaJump {
-  background: url('/images/Blanka-rolling.gif') no-repeat;
+  background: url('../images/Blanka-rolling.gif') no-repeat;
   background-size:50% 50%;
   }
   .blankaWalk {
@@ -317,7 +317,7 @@ height:800px;
   }
   to {
     opacity: 1;
-    background: url('/images/deathscreen.png') no-repeat;
+    background: url('../images/deathscreen.png') no-repeat;
   }
 }
 @-webkit-keyframes buttonLoad {
@@ -334,42 +334,42 @@ height:800px;
 
 @-webkit-keyframes walk {
   from {
-    background: url('/images/blankawalk-1.png') no-repeat;
+    background: url('../images/blankawalk-1.png') no-repeat;
     width:115px;
     height:101px;
   }
   25% {
-    background: url('/images/blankawalk-2.png') no-repeat;
+    background: url('../images/blankawalk-2.png') no-repeat;
     width:94px;
     height:101px;
   }
   37.5% {
-    background: url('/images/blankawalk-3.png') no-repeat;
+    background: url('../images/blankawalk-3.png') no-repeat;
     width:85px;
     height:101px;
   }
   50% {
-    background: url('/images/blankawalk-4.png') no-repeat;
+    background: url('../images/blankawalk-4.png') no-repeat;
     width:92px;
     height:101px;
   }
   62.5% {
-    background: url('/images/blankawalk-5.png') no-repeat;
+    background: url('../images/blankawalk-5.png') no-repeat;
     width:108px;
     height:101px;
   }
   75% {
-    background: url('/images/blankawalk-6.png') no-repeat;
+    background: url('../images/blankawalk-6.png') no-repeat;
     width:87px;
     height:101px;
   }
   87.5% {
-    background: url('/images/blankawalk-7.png') no-repeat;
+    background: url('../images/blankawalk-7.png') no-repeat;
     width:90px;
     height:99px;
   }
   to {
-    background: url('/images/blankawalk-8.png') no-repeat;
+    background: url('../images/blankawalk-8.png') no-repeat;
     width:102px;
     height:99px;
   }
