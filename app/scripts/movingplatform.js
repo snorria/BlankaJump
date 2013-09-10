@@ -11,6 +11,7 @@ var MovingPlatform = function(options) {
   this.duration = options.duration || 5;
   this.current = 0;
   this.dead = false;
+  this.type = 'normal';
 };
 
   MovingPlatform.prototype.onFrame = function(delta) {

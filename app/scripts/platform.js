@@ -1,6 +1,6 @@
 define(function() { 
 
-var Platform = function(pos) {
+var Platform = function(pos,type) {
   this.el = $('<div class="platform"></div>');
   this.pos = pos;
   this.width = 70;
@@ -8,6 +8,10 @@ var Platform = function(pos) {
   this.rightX = this.pos.x+this.width;  
   this.dead = false;
   this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + (-this.pos.y) + 'px,0)');
+  this.type = type || 'normal';
+  if(this.type == 'double'){
+    this.el.css('background','blue');
+  }
   
 };
 

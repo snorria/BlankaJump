@@ -282,7 +282,8 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     } else if(playerY > maxY){
       //hækka viewport.y
       this.viewport.y = playerY - this.viewport.height + VIEWPORT_PADDING;
-      this.score++;
+      this.score += -Math.floor((this.oldViewportY-this.viewport.y));
+      this.oldViewportY = this.viewport.y;
       //remova objects out of view
       var that = this;
       this.forEachObject(function(object) {
@@ -312,7 +313,12 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
         
         var WhatToSpawn = this.whatToSpawn();
         if(WhatToSpawn === 0){
+          var platformtype = Math.random();
+          if(platformtype<0.01){
+          this.addPlatform(new Platform({x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)},'double'));
+          } else{
           this.addPlatform(new Platform({x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}));
+          }
         } else if (WhatToSpawn === 1) {
           this.addEnemy(new Dhalsim({start:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}, end:{x: Math.random()*this.viewport.width, y: (this.viewport.y+this.viewport.height)}}));
         } else if (WhatToSpawn === 2) {
@@ -392,6 +398,7 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
     this.score = 0;
     this.enemySpawn = true;
     this.difficulty = 35; //length between spawns
+    this.oldViewportY = 0;
     this.messageEl.text("");
     // Then start.
     this.unFreezeGame();
