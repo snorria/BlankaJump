@@ -96,7 +96,7 @@ define(['player','platform','dhalsim','controls','movingplatform','fallingplatfo
         var items = [];
        
         $.each(data, function(key, val) {
-          items.push('<li id="' + key + '">' + val.name + ':' + val.score+ '</li>');
+          items.push('<li id="' + key + '">' + val.name + ' - ' + val.score+ '</li>');
         });
        $('.scores').empty();
         $('<ol/>', {
