@@ -14,3 +14,5 @@ Retrospectives:
 Use coffeescript next time, since you can make classes and the code would look so much cleaner.
 Make an extendable platform class for all the platforms.
 Define a structure before hand, my css was horrible at the end since I didn't plan any of the features I added.
+
+You can play the game at: http://snorria.github.io/BlankaJump/
